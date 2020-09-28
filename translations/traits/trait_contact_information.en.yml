@@ -1,0 +1,6 @@
+trait:
+  name: Contact Information
+email: E-Mail
+given_name: Given name
+family_name: Family name
+phone: Phone
