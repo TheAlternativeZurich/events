@@ -1,0 +1,22 @@
+{% extends "security/base.html.twig" %}
+
+{% block title %}{{ "login.title"|trans }}{% endblock %}
+{% block description %}{{ "login.description"|trans }}{% endblock %}
+
+{% trans_default_domain "security" %}
+
+{% block form_content %}
+    <div class="form-wrapper">
+        {{ form(form) }}
+    </div>
+    <p>
+        oder <a href="{{ path("register") }}">{{ "register.title"|trans }}</a>
+    </p>
+{% endblock %}
+
+{% block secondary_content %}
+    <p class="small text-secondary">
+        {{ "login.forgot_passwort"|trans }}
+        <a href="{{ path("recover") }}">{{ "recover.title"|trans }}</a>
+    </p>
+{% endblock %}
