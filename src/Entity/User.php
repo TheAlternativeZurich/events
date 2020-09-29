@@ -33,7 +33,7 @@ class User extends BaseEntity
     const ROLE_ADMIN = 'ROLE_ADMIN';
 
     // can use any features
-    const ROLE_USER = 'ROLE_PARTICIPANT';
+    const ROLE_USER = 'ROLE_USER';
 
     /**
      * @var string|null
@@ -57,19 +57,11 @@ class User extends BaseEntity
     private $registrations;
 
     /**
-     * @var Participation[]|ArrayCollection
-     *
-     * @ORM\OneToMany (targetEntity="App\Entity\Participation", mappedBy="user")
-     */
-    private $participations;
-
-    /**
      * constructor.
      */
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
-        $this->participations = new ArrayCollection();
     }
 
     /**
@@ -80,17 +72,6 @@ class User extends BaseEntity
         return $this->registrations;
     }
 
-    /**
-     * @return Participation[]|ArrayCollection
-     */
-    public function getParticipations()
-    {
-        return $this->participations;
-    }
-
-    /**
-     * @return string
-     */
     public function generateAuthenticationHash()
     {
         $this->authenticationHash = HashHelper::getHash();

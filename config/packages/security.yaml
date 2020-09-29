@@ -21,8 +21,7 @@ security:
             provider: users
             logout:
                 path: logout
-                # where to redirect after logout
-                target: login
+                target: authenticate
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 2419200 # 4 weeks in seconds

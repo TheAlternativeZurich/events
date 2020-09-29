@@ -62,9 +62,17 @@ class Event extends BaseEntity
      */
     private $registrations;
 
+    /**
+     * @var Participation[]|ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="App\Entity\Participation", mappedBy="event")
+     */
+    private $participations;
+
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
+        $this->participations = new ArrayCollection();
     }
 
     public function getRegistrationOpen(): ?\DateTime
