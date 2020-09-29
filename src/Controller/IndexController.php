@@ -29,6 +29,22 @@ class IndexController extends BaseController
     {
         $registrations = $this->getUser()->getRegistrations();
 
-        return $this->render('index.html.twig', ['registrations' => $registrations]);
+        $upcomingRegistrations = [];
+        $pastRegistrations = [];
+        foreach ($registrations as $registration) {
+            $event = $registration->getEvent();
+
+            $key = $event->getStartDate()->format('c').'_'.$event->getId();
+            if (null !== $event->getClosedDate()) {
+                $upcomingRegistrations[$key] = $event;
+            } else {
+                $pastRegistrations[$key] = $event;
+            }
+        }
+
+        krsort($upcomingRegistrations);
+        krsort($pastRegistrations);
+
+        return $this->render('index.html.twig', ['upcoming_registrations' => $upcomingRegistrations, 'past_registrations' => $pastRegistrations]);
     }
 }

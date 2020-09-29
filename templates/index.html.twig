@@ -1,3 +1,9 @@
+{% macro show_registration(registration) %}
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.startDate|dateTimeFormat }}</p>
+{% endmacro %}
+{% import _self as own_macros %}
+
 {% extends "_menu_base.html.twig" %}
 
 {% block title %}{{ "index.title"|trans }}{% endblock %}
@@ -6,21 +12,32 @@
 {% trans_default_domain "index" %}
 
 {% block content %}
-    <h1>{{ "entity.plural"|trans({}, "entity_registration") }}</h1>
-    <p>{{ "index.registrations_help"|trans }}</p>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>{{ "event"|trans({}, "entity_registration") }}</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for registration in registrations %}
-            <tr>
-                <td>hi</td>
-            </tr>
-        {% endfor %}
-        <tbody>
-    </table>
+    <h1>{{ "index.title"|trans() }}</h1>
+    <p>{{ "index.description"|trans() }}</p>
+
+    <hr/>
+
+    <p>
+        <a class="btn btn-primary" href="{{ path("event_create") }}">
+            <i class="fal fa-plus"></i>
+        </a>
+    </p>
+    {% if upcoming_registrations|length == 0 and past_registrations|length == 0 %}
+        <p class="alert alert-info">{{ "index.no_events_yet"|trans }}</p>
+    {% else %}
+        {% if upcoming_registrations %}
+            <h1>{{ "index.upcoming_events"|trans }}</h1>
+
+            {% for registration in upcoming_registrations %}
+                {{ own_macros.show_registration(registration) }}
+            {% endfor %}
+        {% elseif past_registrations %}
+            <h1>{{ "index.past_events"|trans }}</h1>
+
+            {% for registration in past_registrations %}
+                {{ own_macros.show_registration(registration) }}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
 
 {% endblock %}
