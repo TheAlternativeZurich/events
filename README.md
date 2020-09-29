@@ -8,8 +8,5 @@
 Events makes registration and attendance tracking at events easy & efficient.
 
 TODO: 
-add custom authentication provider
-https://symfony.com/doc/current/security/custom_authentication_provider.html
-
-with remember me functionality
-https://stackoverflow.com/questions/12799286/how-to-configure-a-remember-me-aware-listener-in-symfony-2/31290146
+register form styling
+https://blog.bouzekri.net/2015-02-06-symfony-tips-find-form-theme-override-block-name.html

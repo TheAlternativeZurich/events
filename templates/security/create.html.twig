@@ -1,0 +1,19 @@
+{% extends "security/_base.html.twig" %}
+
+{% block title %}{{ "create.title"|trans }}{% endblock %}
+{% block description %}{{ "create.description"|trans }}{% endblock %}
+
+{% trans_default_domain "security" %}
+{% set wide = true %}
+
+{% block form_content %}
+    <p class="alert alert-info">{{ "create.only_used_for_contact_tracing"|trans }}</p>
+    <div class="form-wrapper">
+        {{ form(form) }}
+    </div>
+
+    <p>
+        {{ "create.account_created_yet"|trans }}
+        <a href="{{ path("authenticate") }}">{{ "authenticate.title"|trans }}</a>
+    </p>
+{% endblock %}

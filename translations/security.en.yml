@@ -8,6 +8,14 @@ authenticate:
   success:
     authentication_successful: 'Logged in successful. Welcome back!'
     sent_authentication_link: 'Authentication link sent to your E-Mail. Please check your inbox.'
+  no_account_yet: 'No account created yet?'
+
+create:
+  title: 'Create account'
+  description: 'Create an account to register for events, or create new events.'
+  submit: 'Create'
+  account_created_yet: 'Account created already?'
+  only_used_for_contact_tracing: 'We need this much data for the contact tracing at the events. Only the organizers of the events and, if required, state authorities will see this data.'
 
 logout:
   title: Logout

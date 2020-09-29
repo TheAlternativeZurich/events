@@ -14,6 +14,7 @@ namespace App\Controller;
 use App\Controller\Base\BaseFormController;
 use App\Entity\User;
 use App\Form\User\LoginType;
+use App\Form\User\RegisterType;
 use App\Helper\HashHelper;
 use App\Security\UserToken;
 use App\Service\Interfaces\EmailServiceInterface;
@@ -28,6 +29,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends BaseFormController
 {
+    /**
+     * @Route("/create", name="create")
+     */
+    public function create(Request $request, GuardAuthenticatorHandler $guardHandler): Response
+    {
+        $user = new User();
+        $form = $this->createForm(RegisterType::class, $user)
+            ->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'create.submit']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->fastSave($user);
+
+            return $this->loginAndRedirect($user, $guardHandler, $request);
+        }
+
+        return $this->render('security/create.html.twig', ['form' => $form->createView()]);
+    }
+
     /**
      * @Route("/authenticate/{authenticationHash}", defaults={"authenticationHash"=null}, name="authenticate")
      */
@@ -79,19 +98,23 @@ class SecurityController extends BaseFormController
         $user = $userRepository->findOneBy(['authenticationHash' => $authenticationHash]);
 
         if (null !== $user) {
-            $userToken = new UserToken($user);
-
-            $guardHandler->authenticateWithToken($userToken, $request, 'main');
-
             $message = $translator->trans('authenticate.success.authentication_successful', [], 'security');
             $this->displaySuccess($message);
 
-            return $this->redirectToRoute('index');
+            return $this->loginAndRedirect($user, $guardHandler, $request);
         } else {
             $message = $translator->trans('authenticate.errors.authentication_code_invalid', [], 'security');
             $this->displayError($message);
 
             return null;
         }
+    }
+
+    private function loginAndRedirect(User $user, GuardAuthenticatorHandler $guardHandler, Request $request): RedirectResponse
+    {
+        $userToken = new UserToken($user);
+        $guardHandler->authenticateWithToken($userToken, $request, 'main');
+
+        return $this->redirectToRoute('index');
     }
 }

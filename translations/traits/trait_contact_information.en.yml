@@ -1,6 +1,13 @@
 trait:
   name: Contact Information
+
 email: E-Mail
 given_name: Given name
 family_name: Family name
 phone: Phone
+
+street_address: Street address
+postal_code: Postal code
+locality: Place
+canton: Canton
+country: Country
