@@ -24,18 +24,21 @@
             {%- if label_format is empty -%}
                 {% set label = name|camelCaseToUnderscore %}
             {%- endif -%}
+
+            {%- if translation_domain is not same as(false) -%}
+                {%- if label_html is same as(false) -%}
+                    {% set label = label|trans(label_translation_parameters, translation_domain) %}
+                {%- else -%}
+                    {% set label = label|trans(label_translation_parameters, translation_domain)|raw %}
+                {%- endif -%}
+                {% set translation_domain = false %}
+            {%- endif -%}
+
+            {% if required %}
+                {% set label = label ~ '*' %}
+            {% endif %}
         {%- endif -%}
     {%- endif -%}
     {{- parent() -}}
 {%- endblock form_label -%}
 
-
-{#
-{%- if label is not empty -%}
-    {%- if required -%}
-        {%- set label = label ~ "*" -%}
-    {%- else -%}
-        {%- set label = label ~ " (freiwllig)" -%}
-    {%- endif -%}
-{%- endif -%}
-#}

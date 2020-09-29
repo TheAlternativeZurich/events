@@ -11,3 +11,10 @@ update:
   submit: 'Update'
   success:
     updated: 'Event updated successfully.'
+
+edit:
+  set_registration_restrictions: 'You can place some restrictions on the registration. Restrictions do not apply for organizers. Leave the field empty to e.g. not force a maximum attendee constraint.'
+
+view:
+  title: 'Manage event'
+  description: 'Manage participants & communicate.'

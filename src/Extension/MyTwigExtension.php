@@ -124,6 +124,6 @@ class MyTwigExtension extends AbstractExtension
      */
     private function prependDayName(DateTime $date)
     {
-        return $this->translator->trans('date_time.'.$date->format('D'), [], 'framework');
+        return $this->translator->trans('date_time.weekdays.'.$date->format('D'), [], 'framework');
     }
 }

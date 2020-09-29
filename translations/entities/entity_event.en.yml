@@ -1,3 +1,7 @@
 entity:
   name: Event
   plural: Events
+
+maximum_attendee_capacity: Maximum number of registrations
+registration_open: Registration open from
+registration_close: Registration closed at

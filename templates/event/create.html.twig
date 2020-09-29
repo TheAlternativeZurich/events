@@ -1,10 +1,9 @@
-{% extends "security/_base.html.twig" %}
+{% extends "_form_menu_base.html.twig" %}
 
 {% block title %}{{ "create.title"|trans }}{% endblock %}
 {% block description %}{{ "create.description"|trans }}{% endblock %}
 
 {% trans_default_domain "event" %}
-{% set wide = true %}
 
 {% block form_content %}
     <div class="form-wrapper">

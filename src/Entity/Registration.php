@@ -43,25 +43,38 @@ class Registration extends BaseEntity
     private $number;
 
     /**
-     * @var Event|ArrayCollection
+     * @var Event
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="registrations")
      */
     private $event;
 
     /**
-     * @var User|ArrayCollection
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="registrations")
      */
     private $user;
 
-    public static function createFromUser(Event $event, User $user, int $registrationNumber)
+    /**
+     * @var Participation[]|ArrayCollection
+     *
+     * @ORM\OneToMany (targetEntity="App\Entity\Participation", mappedBy="registration")
+     */
+    private $participations;
+
+    public function __construct()
+    {
+        $this->participations = new ArrayCollection();
+    }
+
+    public static function createFromUser(Event $event, User $user, int $registrationNumber, bool $isOrganizer = false)
     {
         $registration = new Registration();
         $registration->event = $event;
         $registration->user = $user;
         $registration->number = $registrationNumber;
+        $registration->isOrganizer = $isOrganizer;
         $registration->fromOtherContactInformation($user);
 
         return $registration;
@@ -78,7 +91,7 @@ class Registration extends BaseEntity
     }
 
     /**
-     * @return Event|ArrayCollection
+     * @return Event
      */
     public function getEvent()
     {
@@ -86,7 +99,7 @@ class Registration extends BaseEntity
     }
 
     /**
-     * @return User|ArrayCollection
+     * @return User
      */
     public function getUser()
     {

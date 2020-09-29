@@ -19,7 +19,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200929073554 extends AbstractMigration
+final class Version20200929180118 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -30,7 +30,7 @@ final class Version20200929073554 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE event (id CHAR(36) NOT NULL --(DC2Type:guid)
-        , registration_open DATETIME DEFAULT NULL, registration_close DATETIME DEFAULT NULL, closed_date DATETIME DEFAULT NULL, created_at DATETIME NOT NULL, last_changed_at DATETIME NOT NULL, PRIMARY KEY(id))');
+        , maximum_attendee_capacity INTEGER DEFAULT NULL, registration_open DATETIME DEFAULT NULL, registration_close DATETIME DEFAULT NULL, closed_date DATETIME DEFAULT NULL, created_at DATETIME NOT NULL, last_changed_at DATETIME NOT NULL, organizer CLOB NOT NULL, name CLOB NOT NULL, description CLOB DEFAULT NULL, start_date DATETIME NOT NULL, end_date DATETIME DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE participation (id CHAR(36) NOT NULL --(DC2Type:guid)
         , event_id CHAR(36) DEFAULT NULL --(DC2Type:guid)
         , registration_id CHAR(36) DEFAULT NULL --(DC2Type:guid)

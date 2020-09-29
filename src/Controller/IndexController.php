@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
+use App\Entity\Registration;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,16 +30,18 @@ class IndexController extends BaseController
     {
         $registrations = $this->getUser()->getRegistrations();
 
+        /** @var Registration[] $upcomingRegistrations */
         $upcomingRegistrations = [];
+        /** @var Registration[] $pastRegistrations */
         $pastRegistrations = [];
         foreach ($registrations as $registration) {
             $event = $registration->getEvent();
 
             $key = $event->getStartDate()->format('c').'_'.$event->getId();
             if (null !== $event->getClosedDate()) {
-                $upcomingRegistrations[$key] = $event;
+                $upcomingRegistrations[$key] = $registration;
             } else {
-                $pastRegistrations[$key] = $event;
+                $pastRegistrations[$key] = $registration;
             }
         }
 

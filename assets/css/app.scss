@@ -48,14 +48,15 @@ body {
   padding: 1rem 2rem;
 }
 
-.col-form-label {
-  font-weight: bold;
-}
-
 .wrapper {
   @include shadow();
 
   background-color: #fff;
   margin-top: 2em;
   padding: 1em;
+}
+
+h3 {
+  font-size: 1em;
+  font-weight: bold;
 }

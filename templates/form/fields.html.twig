@@ -1,4 +1,4 @@
-{% block contact_information_row %}
+{% block contact_information_trait_row %}
     <div class="row">
         <div class="col-md-6">
             {{ form_row(form.givenName) }}
@@ -36,4 +36,52 @@
             {{ form_row(form.country) }}
         </div>
     </div>
+{% endblock %}
+
+{% block event_trait_row %}
+    <div class="row">
+        <div class="col-md-8">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_row(form.organizer) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ form_row(form.description) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.startDate) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.endDate) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block event_widget %}
+    {{ form_row(form.event) }}
+
+    <hr/>
+    <p class="text-secondary">{{ "edit.set_registration_restrictions"|trans({}, "event") }}</p>
+    <div class="row mt-4">
+        <div class="col-md-6">
+            {{ form_row(form.maximumAttendeeCapacity) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            {{ form_row(form.registrationOpen) }}
+        </div>
+        <div class="col-md-6">
+            {{ form_row(form.registrationClose) }}
+        </div>
+    </div>
+
 {% endblock %}

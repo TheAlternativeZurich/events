@@ -1,0 +1,8 @@
+trait:
+  name: Event
+
+name: Name
+organizer: Organizer
+description: Description
+start_date: Start date
+end_date: End date

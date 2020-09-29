@@ -13,6 +13,7 @@ namespace App\Controller;
 
 use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Event;
+use App\Entity\Registration;
 use App\Form\Event\EditType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
@@ -35,6 +36,9 @@ class EventController extends BaseDoctrineController
     {
         $event = new Event();
         if ($this->tryProcessForm($event, $request, $form)) {
+            $registration = Registration::createFromUser($event, $this->getUser(), 1, true);
+            $this->fastSave($registration);
+
             $message = $translator->trans('create.success.created', [], 'event');
             $this->displaySuccess($message);
 
@@ -51,7 +55,23 @@ class EventController extends BaseDoctrineController
      */
     public function viewAction(Event $event)
     {
-        return $this->render('event/view.html.twig', ['event' => $event]);
+        $registrations = $event->getRegistrations();
+
+        /** @var Registration[] $participants */
+        $participants = [];
+        /** @var Registration[] $organizers */
+        $organizers = [];
+        foreach ($registrations as $registration) {
+            $key = $registration->getCreatedAt()->format('c').'_'.$registration->getId();
+
+            if ($registration->getIsOrganizer()) {
+                $organizers[$key] = $registration;
+            } else {
+                $participants[$key] = $registration;
+            }
+        }
+
+        return $this->render('event/view.html.twig', ['event' => $event, 'participatns' => $participants, 'organizers' => $organizers]);
     }
 
     /**

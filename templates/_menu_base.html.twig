@@ -7,11 +7,6 @@
 
 {% extends "_base.html.twig" %}
 
-{% block title %}{{ "index.title"|trans }}{% endblock %}
-{% block description %}{{ "index.description"|trans }}{% endblock %}
-
-{% trans_default_domain "index" %}
-
 {% block body %}
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,7 +16,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
-                    {{ own_macros.nav_item(path("index"), "index.title"|trans) }}
+                    {{ own_macros.nav_item(path("index"), "index.title"|trans({}, "index")) }}
                 </ul>
                 <ul class="navbar-nav">
                     {{ own_macros.nav_item(path("logout"), "logout.title"|trans({}, "security")) }}
@@ -30,6 +25,10 @@
         </nav>
 
         <div class="wrapper">
+            <h1>{{ block('title') }}</h1>
+            <p>{{ block('description') }}</p>
+
+            <hr/>
             {% block content %}
 
             {% endblock %}

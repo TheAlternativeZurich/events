@@ -5,7 +5,7 @@
 This project uses the symfony framework for its php backend. HTML is generated service side.
 
 backend:
-- `symfony/sceleton`, `orm`, `translations`, `logging`, `dotenv`, `mailer`, `form`, `requirements-checker` and `templates`.
+- `symfony/sceleton`, `orm`, `translations`, `logging`, `annotations`, `dotenv`, `mailer`, `form`, `requirements-checker` and `templates`.
 - dev dependencies include `encore`, `orm-fixtures`, `cs-fixer`, `security-checker`, `debug`, `simple-phpunit`, `brainmaestro/composer-git-hooks`.
 - for deployment, `famoser/agnes` is used.
 

@@ -39,14 +39,14 @@ trait EventTrait
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="datetime")
      */
     private $startDate;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
 

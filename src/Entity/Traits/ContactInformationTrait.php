@@ -89,15 +89,15 @@ trait ContactInformationTrait
      */
     protected function fromOtherContactInformation($other)
     {
-        $this->givenName = $other->givenName;
-        $this->familyName = $other->familyName;
-        $this->phone = $other->phone;
-        $this->email = $other->email;
-        $this->streetAddress = $other->streetAddress;
-        $this->postalCode = $other->postalCode;
-        $this->locality = $other->locality;
-        $this->canton = $other->canton;
-        $this->country = $other->country;
+        $this->givenName = $other->getGivenName();
+        $this->familyName = $other->getFamilyName();
+        $this->phone = $other->getPhone();
+        $this->email = $other->getEmail();
+        $this->streetAddress = $other->getStreetAddress();
+        $this->postalCode = $other->getPostalCode();
+        $this->locality = $other->getLocality();
+        $this->canton = $other->getCanton();
+        $this->country = $other->getCountry();
     }
 
     public function getGivenName(): ?string
