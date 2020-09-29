@@ -1,15 +1,39 @@
-{% block contact_information_widget %}
-    <div class="form-row">
-        <div class="form-group col-md-6">
+{% block _register_contact_information_widget %}
+    <div class="row">
+        <div class="col-md-6">
             {{ form_row(form.givenName) }}
         </div>
-        <div class="form-group col-md-6">
+        <div class="col-md-6">
             {{ form_row(form.familyName) }}
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group col-md-12">
+        <div class="col-md-6">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="col-md-6">
             {{ form_row(form.phone) }}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-9">
+            {{ form_row(form.streetAddress) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 postal-code-input">
+            {{ form_row(form.postalCode) }}
+        </div>
+        <div class="col-md-6 locality-input">
+            {{ form_row(form.locality) }}
+        </div>
+        <div class="col-md-3 canton-input">
+            {{ form_row(form.canton) }}
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            {{ form_row(form.country) }}
         </div>
     </div>
 {% endblock %}

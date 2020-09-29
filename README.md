@@ -9,4 +9,4 @@ Events makes registration and attendance tracking at events easy & efficient.
 
 TODO: 
 register form styling
-https://blog.bouzekri.net/2015-02-06-symfony-tips-find-form-theme-override-block-name.html
+

@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+
+$json = file_get_contents('https://raw.githubusercontent.com/zauberware/postal-codes-json-xml-csv/master/data/CH/zipcodes.ch.json');
+$content = json_decode($json, true);
+
+$cleanedContent = [];
+foreach ($content as $entry) {
+    $cleanedEntry = [
+        'postalCode' => $entry['zipcode'],
+        'locality' => $entry['place'],
+        'canton' => $entry['state_code'],
+    ];
+    $cleanedContent[] = $cleanedEntry;
+}
+
+$json = json_encode($cleanedContent);
+file_put_contents(__DIR__.'/../assets/js/ressources/zipcodes.ch.json', $json);

@@ -32,7 +32,7 @@ class SecurityController extends BaseFormController
     /**
      * @Route("/create", name="create")
      */
-    public function create(Request $request, GuardAuthenticatorHandler $guardHandler): Response
+    public function create(Request $request, GuardAuthenticatorHandler $guardHandler, TranslatorInterface $translator): Response
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user)
@@ -40,6 +40,9 @@ class SecurityController extends BaseFormController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->fastSave($user);
+
+            $message = $translator->trans('create.success.welcome', [], 'security');
+            $this->displaySuccess($message);
 
             return $this->loginAndRedirect($user, $guardHandler, $request);
         }

@@ -16,7 +16,8 @@ create:
   submit: 'Create'
   account_created_yet: 'Account created already?'
   only_used_for_contact_tracing: 'We need this much data for the contact tracing at the events. Only the organizers of the events and, if required, state authorities will see this data.'
+  success:
+    welcome: 'Welcome :)'
 
 logout:
   title: Logout
-
