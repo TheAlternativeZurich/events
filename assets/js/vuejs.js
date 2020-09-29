@@ -24,6 +24,5 @@ FontawesomeLibrary.add(
   faStar,
   faQuestionCircle,
   faEnvelopeOpen,
-
   faStartSolid
 )

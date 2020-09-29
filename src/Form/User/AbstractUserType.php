@@ -20,7 +20,7 @@ abstract class AbstractUserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'translation_domain' => 'trait_user',
+            'translation_domain' => 'entity_user',
             'data_class' => User::class,
         ]);
         parent::configureOptions($resolver);

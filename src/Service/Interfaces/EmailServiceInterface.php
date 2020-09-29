@@ -11,14 +11,9 @@
 
 namespace App\Service\Interfaces;
 
-use App\Entity\Email;
 use App\Entity\User;
 
 interface EmailServiceInterface
 {
-    public function sendRegisterConfirmLink(User $user): bool;
-
-    public function sendRecoverConfirmLink(User $user): bool;
-
-    public function getTemplateContext(Email $email): array;
+    public function sendAuthenticateLink(User $user): bool;
 }

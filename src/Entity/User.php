@@ -15,6 +15,7 @@ use App\Entity\Base\BaseEntity;
 use App\Entity\Traits\ContactInformationTrait;
 use App\Entity\Traits\IdTrait;
 use App\Entity\Traits\TimeTrait;
+use App\Helper\HashHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -85,6 +86,14 @@ class User extends BaseEntity
     public function getParticipations()
     {
         return $this->participations;
+    }
+
+    /**
+     * @return string
+     */
+    public function generateAuthenticationHash()
+    {
+        $this->authenticationHash = HashHelper::getHash();
     }
 
     /**

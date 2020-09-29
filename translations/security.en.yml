@@ -1,10 +1,13 @@
 authenticate:
   title: 'Authenticate'
   description: 'Authenticate yourself with the link received by E-Mail.'
+  help: 'Submit your E-Mail so we can send you a link to login.'
+  submit: 'Submit'
   errors:
     authentication_code_invalid: 'This code is not valid (anymore). Please request a new code.'
   success:
     authentication_successful: 'Logged in successful. Welcome back!'
+    sent_authentication_link: 'Authentication link sent to your E-Mail. Please check your inbox.'
 
 logout:
   title: Logout
