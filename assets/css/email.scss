@@ -11,3 +11,11 @@ $global-width: 650px;
 $paragraph-margin-bottom: 0;
 
 @import '~foundation-emails/scss/foundation-emails';
+
+.logo {
+  height: 50px;
+}
+
+.content {
+  padding: 20px;
+}

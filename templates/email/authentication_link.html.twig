@@ -1,0 +1,14 @@
+{% extends "email/_base.html.twig" %}
+
+{% trans_default_domain "email" %}
+
+{% block body %}
+    <p class="text-left">{{ "email.send_authentication_link.body"|trans }}</p>
+    <spacer size="8"></spacer>
+
+    <center>
+        <button href="{{ absolute_url(path("authenticate", {"authenticationHash" : user.authenticationHash })) }}">
+            {{ "authenticate.title"|trans({}, "security") }}
+        </button>
+    </center>
+{% endblock %}

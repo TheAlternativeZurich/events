@@ -13,15 +13,27 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Service\Interfaces\EmailServiceInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EmailService implements EmailServiceInterface
 {
+    /**
+     * @var \Doctrine\Persistence\ObjectManager
+     */
+    private $manager;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\Request|null
+     */
+    private $request;
+
     /**
      * @var TranslatorInterface
      */
@@ -45,8 +57,10 @@ class EmailService implements EmailServiceInterface
     /**
      * EmailService constructor.
      */
-    public function __construct(TranslatorInterface $translator, LoggerInterface $logger, MailerInterface $mailer, string $mailerFromEmail)
+    public function __construct(RequestStack $requestStack, ManagerRegistry $managerRegistry, TranslatorInterface $translator, LoggerInterface $logger, MailerInterface $mailer, string $mailerFromEmail)
     {
+        $this->manager = $managerRegistry->getManager();
+        $this->request = $requestStack->getCurrentRequest();
         $this->translator = $translator;
         $this->logger = $logger;
         $this->mailer = $mailer;
@@ -63,7 +77,7 @@ class EmailService implements EmailServiceInterface
         $user->generateAuthenticationHash();
 
         $message = (new TemplatedEmail())
-            ->subject($this->translator->trans('email.send_authentication_link.subject', [], 'email'))
+            ->subject($this->translator->trans('email.send_authentication_link.subject', ['%page%' => $this->request->getHttpHost()], 'email'))
             ->from($this->mailerFromEmail)
             ->to($user->getEmail());
 
@@ -75,6 +89,9 @@ class EmailService implements EmailServiceInterface
 
         try {
             $this->mailer->send($message);
+
+            $this->manager->persist($user);
+            $this->manager->flush();
 
             return true;
         } catch (TransportExceptionInterface $exception) {

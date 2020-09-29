@@ -120,4 +120,9 @@ class User extends BaseEntity
 
         return [self::ROLE_USER];
     }
+
+    public function getAuthenticationHash(): ?string
+    {
+        return $this->authenticationHash;
+    }
 }

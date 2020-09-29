@@ -23,7 +23,7 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $entries = [
-            ['f@thealternative.ch', 'asdf', 'Florian', 'Moser'],
+            ['f@thealternative.ch', 'asdf', 'Florian', 'Moser', '0781234567', 'Jäherweg 2', '8003', 'Zürich', 'Zürich', 'CH'],
         ];
 
         foreach ($entries as $entry) {
@@ -31,6 +31,13 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setEmail($entry[0]);
             $user->setGivenName($entry[2]);
             $user->setFamilyName($entry[3]);
+            $user->setPhone($entry[4]);
+
+            $user->setStreetAddress($entry[5]);
+            $user->setPostalCode($entry[6]);
+            $user->setLocality($entry[7]);
+            $user->setCanton($entry[8]);
+            $user->setCountry($entry[9]);
             $manager->persist($user);
         }
 

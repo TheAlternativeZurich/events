@@ -1,0 +1,8 @@
+{% extends "email/_base.txt.twig" %}
+
+{% trans_default_domain "email" %}
+
+{% block body %}
+    {{ "email.send_authentication_link.body"|trans }}
+    {{ absolute_url(path("authenticate", {"authenticationHash" : user.authenticationHash })) }}
+{% endblock %}
