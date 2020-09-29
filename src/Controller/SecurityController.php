@@ -43,6 +43,15 @@ class SecurityController extends BaseFormController
             ->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'create.submit']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+            $existingUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
+            if ($existingUser) {
+                $message = $translator->trans('create.error.already_registered', [], 'security');
+                $this->displayError($message);
+
+                return $this->redirectToRoute('authenticate');
+            }
+
             $this->fastSave($user);
 
             $message = $translator->trans('create.success.welcome', [], 'security');

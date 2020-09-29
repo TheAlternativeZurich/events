@@ -12,6 +12,7 @@
 namespace App\Controller;
 
 use App\Controller\Base\BaseController;
+use App\Entity\Registration;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,11 +22,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends BaseController
 {
     /**
-     * @Route("", name="registration")
+     * @Route("/{registration}", name="registration")
      *
      * @return Response
      */
-    public function indexAction()
+    public function indexAction(Registration $registration)
     {
         return $this->render('index.html.twig');
     }

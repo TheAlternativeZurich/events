@@ -1,0 +1,42 @@
+{% macro nav_item(link, text) %}
+    <li class="nav-item {% if app.request.pathInfo == link %}active{% endif %}">
+        <a class="nav-link" href="{{ link }}">{{ text }}</a>
+    </li>
+{% endmacro %}
+{% import _self as own_macros %}
+
+{% extends "_base.html.twig" %}
+
+{% block title %}{{ "index.title"|trans }}{% endblock %}
+{% block description %}{{ "index.description"|trans }}{% endblock %}
+
+{% trans_default_domain "index" %}
+
+{% block body %}
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    {{ own_macros.nav_item(path("index"), "index.title"|trans) }}
+                </ul>
+                <ul class="navbar-nav">
+                    {{ own_macros.nav_item(path("logout"), "logout.title"|trans({}, "security")) }}
+                </ul>
+            </div>
+        </nav>
+
+        <div class="wrapper">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+
+        <p class="mt-2 text-right text-secondary">
+            code on <a href="https://github.com/thealternativezurich/events">github</a>
+        </p>
+    </div>
+{% endblock %}

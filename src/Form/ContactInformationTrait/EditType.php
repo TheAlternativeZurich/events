@@ -37,7 +37,7 @@ class EditType extends AbstractContactInformationTraitType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'block_name' => 'contact_information',
+            'block_prefix' => 'contact_information',
         ]);
         parent::configureOptions($resolver);
     }
