@@ -5,8 +5,4 @@
 
 ## About
 
-Events makes registration and attendance tracking at events easy & efficient.
-
-TODO: 
-register form styling
-
+Makes registration and participation tracking at events easy & efficient.
