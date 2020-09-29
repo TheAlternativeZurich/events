@@ -11,7 +11,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Base\BaseFormController;
+use App\Controller\Base\BaseDoctrineController;
 use App\Entity\User;
 use App\Form\User\LoginType;
 use App\Form\User\RegisterType;
@@ -27,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SecurityController extends BaseFormController
+class SecurityController extends BaseDoctrineController
 {
     /**
      * @Route("/create", name="create")

@@ -11,74 +11,81 @@
 
 namespace App\Entity\Traits;
 
+use Doctrine\ORM\Mapping as ORM;
+
 trait EventTrait
 {
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(type="text")
      */
     private $organizer;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(type="text")
      */
     private $name;
 
     /**
-     * @var string
+     * @var string|null
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
+     *
+     * @ORM\Column(type="text")
      */
     private $startDate;
 
     /**
      * @var \DateTime|null
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     private $endDate;
 
-    /**
-     * @var int
-     */
-    private $maximumAttendeeCapacity;
-
-    public function getOrganizer(): string
+    public function getOrganizer(): ?string
     {
         return $this->organizer;
     }
 
-    public function setOrganizer(string $organizer): void
+    public function setOrganizer(?string $organizer): void
     {
         $this->organizer = $organizer;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(string $description): void
+    public function setDescription(?string $description): void
     {
         $this->description = $description;
     }
 
-    public function getStartDate(): \DateTime
+    public function getStartDate(): ?\DateTime
     {
         return $this->startDate;
     }
 
-    public function setStartDate(\DateTime $startDate): void
+    public function setStartDate(?\DateTime $startDate): void
     {
         $this->startDate = $startDate;
     }
@@ -91,15 +98,5 @@ trait EventTrait
     public function setEndDate(?\DateTime $endDate): void
     {
         $this->endDate = $endDate;
-    }
-
-    public function getMaximumAttendeeCapacity(): ?int
-    {
-        return $this->maximumAttendeeCapacity;
-    }
-
-    public function setMaximumAttendeeCapacity(?int $maximumAttendeeCapacity): void
-    {
-        $this->maximumAttendeeCapacity = $maximumAttendeeCapacity;
     }
 }

@@ -1,0 +1,13 @@
+create:
+  title: 'Create event'
+  description: 'Create your own event. Afterwards you will be able to invite participants.'
+  submit: 'Create'
+  success:
+    created: 'Event created successfully.'
+
+update:
+  title: 'Update event'
+  description: 'Update the event.'
+  submit: 'Update'
+  success:
+    updated: 'Event updated successfully.'

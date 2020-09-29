@@ -29,6 +29,13 @@ class Event extends BaseEntity
     use EventTrait;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $maximumAttendeeCapacity;
+
+    /**
      * when the registration starts being accessible.
      *
      * @var \DateTime|null
@@ -73,6 +80,16 @@ class Event extends BaseEntity
     {
         $this->registrations = new ArrayCollection();
         $this->participations = new ArrayCollection();
+    }
+
+    public function getMaximumAttendeeCapacity(): ?int
+    {
+        return $this->maximumAttendeeCapacity;
+    }
+
+    public function setMaximumAttendeeCapacity(?int $maximumAttendeeCapacity): void
+    {
+        $this->maximumAttendeeCapacity = $maximumAttendeeCapacity;
     }
 
     public function getRegistrationOpen(): ?\DateTime
