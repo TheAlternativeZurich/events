@@ -22,7 +22,11 @@ class BaseController extends AbstractController
      */
     protected function getUser()
     {
-        return parent::getUser();
+        $token = $this->container->get('security.token_storage')->getToken();
+
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+        return $userRepository->findOneBy(['email' => $token->getUser()]);
     }
 
     public static function getSubscribedServices()

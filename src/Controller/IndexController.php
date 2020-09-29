@@ -27,6 +27,8 @@ class IndexController extends BaseController
      */
     public function indexAction()
     {
-        return $this->render('index.html.twig');
+        $registrations = $this->getUser()->getRegistrations();
+
+        return $this->render('index.html.twig', ['registrations' => $registrations]);
     }
 }

@@ -34,6 +34,10 @@ class SecurityController extends BaseFormController
      */
     public function create(Request $request, GuardAuthenticatorHandler $guardHandler, TranslatorInterface $translator): Response
     {
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('index');
+        }
+
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user)
             ->add('submit', SubmitType::class, ['translation_domain' => 'security', 'label' => 'create.submit']);
@@ -60,6 +64,10 @@ class SecurityController extends BaseFormController
             if ($response instanceof Response) {
                 return $response;
             }
+        }
+
+        if (null !== $this->getUser()) {
+            return $this->redirectToRoute('index');
         }
 
         $user = new User();
