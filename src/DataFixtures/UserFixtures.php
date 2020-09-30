@@ -19,6 +19,7 @@ use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture implements OrderedFixtureInterface
 {
     const ORDER = 0;
+    const TESTER_REFERENCE = User::class.'_tester';
 
     public function load(ObjectManager $manager)
     {
@@ -39,6 +40,8 @@ class UserFixtures extends Fixture implements OrderedFixtureInterface
             $user->setCanton($entry[8]);
             $user->setCountry($entry[9]);
             $manager->persist($user);
+
+            $this->addReference(self::TESTER_REFERENCE, $user);
         }
 
         $manager->flush();

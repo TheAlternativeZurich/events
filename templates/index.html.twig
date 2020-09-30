@@ -1,6 +1,4 @@
 {% macro show_registration(registration) %}
-    <h3>{{ registration.event.name }}</h3>
-    <p>{{ registration.event.startDate|dateTimeFormat }}</p>
 {% endmacro %}
 {% import _self as own_macros %}
 
@@ -12,19 +10,39 @@
 {% trans_default_domain "index" %}
 
 {% block content %}
-    <p>
-        <a class="btn btn-primary" href="{{ path("event_create") }}">
-            <i class="fal fa-plus"></i>
-        </a>
-    </p>
+    <div class="content">
+        <p>
+            <a class="btn btn-primary" href="{{ path("event_create") }}">
+                <i class="fal fa-plus"></i>
+                {{ "create.title"|trans({}, "event") }}
+            </a>
+        </p>
+    </div>
     {% if upcoming_registrations|length == 0 and past_registrations|length == 0 %}
-        <p class="alert alert-info">{{ "index.no_events_yet"|trans }}</p>
+        <div class="content">
+            <p class="alert alert-info">{{ "index.no_events_yet"|trans }}</p>
+        </div>
     {% else %}
         {% if upcoming_registrations %}
-            <h2 class="mt-4">{{ "index.upcoming_events"|trans }}</h2>
+            <div class="content mt-5">
+                <h2>{{ "index.upcoming_events"|trans }}</h2>
+            </div>
+            <div class="row">
 
+            </div>
             {% for registration in upcoming_registrations %}
-                {{ own_macros.show_registration(registration) }}
+                <div class="col-md-6">
+                    <div class="content tile">
+                        <h3><b>{{ registration.event.organizer }}</b>: {{ registration.event.name }}</h3>
+                        <p class="text-secondary">{{ registration.event.startDate|dateTimeFormat }}</p>
+                        <p>{{ registration.event.description }}</p>
+                        <p>
+                            <a href="{{ path("register", {"identifier" : registration.event.identifier}) }}">
+                                {{ "index.view_registration"|trans }}
+                            </a>
+                        </p>
+                    </div>
+                </div>
             {% endfor %}
         {% elseif past_registrations %}
             <h2 class="mt-4">{{ "index.past_events"|trans }}</h2>

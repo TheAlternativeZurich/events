@@ -1,0 +1,45 @@
+{% extends "_menu_base.html.twig" %}
+
+{% block title %}{{ event.organizer }} - {{ event.name }}{% endblock %}
+{% block description %}{{ "register.description"|trans }}{% endblock %}
+
+{% trans_default_domain "index" %}
+
+{% block content %}
+    <section class="center-wrapper mt-4">
+        <div class="center-content wide">
+            <h1>{{ event.organizer }} - {{ event.name }}</h1>
+            <p class="text-secondary">
+                {{ event.startDate|dateTimeFormat }}
+                {% if event.endDate %}
+                    - {{ event.endDate|dateTimeFormat }}
+                {% endif %}
+            </p>
+            <p>
+                {{ event.description }}
+            </p>
+
+            <hr/>
+            {% if existing_registration is not null %}
+                <p class="alert alert-success">
+                    {{ "register.already_registered"|trans }}
+                </p>
+                {% if existing_registration.canDeregister %}
+                    <div class="btn-group" role="group">
+                        <a type="button" class="btn btn-secondary"
+                           href="{{ path("registration_update", {"registration": existing_registration.id}) }}">
+                            {{ "update.title"|trans({}, "registration") }}
+                        </a>
+                        <a type="button" class="btn btn-danger"
+                           href="{{ path("registration_delete", {"registration": existing_registration.id}) }}">
+                            {{ "delete.title"|trans({}, "registration") }}
+                        </a>
+                    </div>
+                {% endif %}
+            {% elseif event.registrationPossible %}
+                {{ form(form) }}
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}

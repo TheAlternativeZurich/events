@@ -1,0 +1,18 @@
+{% extends "_form_menu_base.html.twig" %}
+
+{% block title %}{{ "delete.title"|trans }}{% endblock %}
+{% block description %}{{ "delete.description"|trans }}{% endblock %}
+
+{% trans_default_domain "registration" %}
+
+{% block form_content %}
+    <p class="alert alert-danger">
+        {{ "delete.confirm_consequences"|trans }}
+    </p>
+
+    <p>
+        <a class="btn btn-danger" href="{{ path("registration_delete", {"registration": registration.id, "confirm": "confirm"}) }}">
+            {{ "delete.title"|trans }}
+        </a>
+    </p>
+{% endblock %}

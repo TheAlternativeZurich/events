@@ -64,6 +64,14 @@ class User extends BaseEntity
         $this->registrations = new ArrayCollection();
     }
 
+    public static function createFromRegistration(Registration $registration)
+    {
+        $user = new User();
+        $user->fromOtherContactInformation($registration);
+
+        return $user;
+    }
+
     /**
      * @return Registration[]|ArrayCollection
      */
@@ -105,5 +113,16 @@ class User extends BaseEntity
     public function getAuthenticationHash(): ?string
     {
         return $this->authenticationHash;
+    }
+
+    public function getRegistrationFor(Event $event): ?Registration
+    {
+        foreach ($this->getRegistrations() as $registration) {
+            if ($registration->getEvent() === $event) {
+                return $registration;
+            }
+        }
+
+        return null;
     }
 }

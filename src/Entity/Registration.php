@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\RegistrationRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Registration extends BaseEntity
@@ -68,16 +68,20 @@ class Registration extends BaseEntity
         $this->participations = new ArrayCollection();
     }
 
-    public static function createFromUser(Event $event, User $user, int $registrationNumber, bool $isOrganizer = false)
+    public static function createFromUser(Event $event, User $user, bool $isOrganizer = false)
     {
         $registration = new Registration();
         $registration->event = $event;
         $registration->user = $user;
-        $registration->number = $registrationNumber;
         $registration->isOrganizer = $isOrganizer;
         $registration->fromOtherContactInformation($user);
 
         return $registration;
+    }
+
+    public function setNumber(int $number)
+    {
+        $this->number = $number;
     }
 
     public function getIsOrganizer(): bool
@@ -104,5 +108,19 @@ class Registration extends BaseEntity
     public function getUser()
     {
         return $this->user;
+    }
+
+    public function getNumber(): int
+    {
+        return $this->number;
+    }
+
+    public function canDeregister(): bool
+    {
+        if ($this->participations->count() > 0) {
+            return false;
+        }
+
+        return $this->event->isRegistrationOpen();
     }
 }

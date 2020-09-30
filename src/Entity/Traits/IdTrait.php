@@ -29,10 +29,7 @@ trait IdTrait
      */
     private $id;
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -42,10 +39,7 @@ trait IdTrait
         $this->id = $id;
     }
 
-    /**
-     * @return bool
-     */
-    public function isPersistedInDatabase()
+    public function isPersistedInDatabase(): bool
     {
         return null !== $this->id;
     }

@@ -12,6 +12,7 @@
 namespace App\Controller\Base;
 
 use App\Entity\User;
+use App\Security\UserToken;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -23,6 +24,10 @@ class BaseController extends AbstractController
     protected function getUser()
     {
         $token = $this->container->get('security.token_storage')->getToken();
+
+        if (!($token instanceof UserToken)) {
+            return null;
+        }
 
         $userRepository = $this->getDoctrine()->getRepository(User::class);
 

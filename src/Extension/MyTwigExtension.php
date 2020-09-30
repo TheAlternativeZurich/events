@@ -62,7 +62,7 @@ class MyTwigExtension extends AbstractExtension
     public function dateFormatFilter($date)
     {
         if ($date instanceof DateTime) {
-            return $this->prependDayName($date).', '.$date->format(DateTimeFormatter::DATE_FORMAT);
+            return $date->format(DateTimeFormatter::DATE_FORMAT);
         }
 
         return '-';
@@ -76,7 +76,7 @@ class MyTwigExtension extends AbstractExtension
     public function dateTimeFormatFilter($date)
     {
         if ($date instanceof DateTime) {
-            return $this->prependDayName($date).', '.$date->format(DateTimeFormatter::DATE_TIME_FORMAT);
+            return $date->format(DateTimeFormatter::DATE_TIME_FORMAT);
         }
 
         return '-';
@@ -115,15 +115,5 @@ class MyTwigExtension extends AbstractExtension
         }
 
         return $value;
-    }
-
-    /**
-     * translates the day of the week.
-     *
-     * @return string
-     */
-    private function prependDayName(DateTime $date)
-    {
-        return $this->translator->trans('date_time.weekdays.'.$date->format('D'), [], 'framework');
     }
 }

@@ -18,14 +18,15 @@ body {
 //center layout for messages & easy forms
 .center-wrapper {
   align-items: center;
-  background: $gray-100;
   display: flex;
   min-height: 100%;
 }
 
 .center-content {
+  background: #fff;
   margin: 40px auto;
   max-width: 540px;
+  padding: 1em;
   width: 100%;
 }
 
@@ -46,15 +47,23 @@ body {
   padding: 1rem 2rem;
 }
 
-.wrapper {
+.content {
+  margin-top: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  & > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.tile {
   @include shadow();
 
   background-color: #fff;
-  margin-top: 2em;
   padding: 1em;
-}
 
-h3 {
-  font-size: 1em;
-  font-weight: bold;
+  & > *:last-child {
+    margin-bottom: 0;
+  }
 }

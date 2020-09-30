@@ -1,0 +1,13 @@
+update:
+  title: 'Update reservation'
+  description: 'Update reservation details.'
+  submit: 'Update'
+  success:
+    updated: 'Reservation updated successfully.'
+
+delete:
+  title: 'Delete reservation'
+  description: 'Delete reservation for event.'
+  confirm_consequences: 'Are you sure you want to remove this reservation? You might not be able to reserve again.'
+  success:
+    deleted: 'Reservation removed.'

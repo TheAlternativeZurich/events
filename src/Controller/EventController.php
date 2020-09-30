@@ -15,8 +15,8 @@ use App\Controller\Base\BaseDoctrineController;
 use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditType;
+use App\Security\Voter\EventVoter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,10 +39,12 @@ class EventController extends BaseDoctrineController
             ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'create.submit']);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->fastSave($event);
+            $eventRepository = $this->getDoctrine()->getRepository(Event::class);
+            $eventRepository->save($event);
 
-            $registration = Registration::createFromUser($event, $this->getUser(), 1, true);
-            $this->fastSave($registration);
+            $registration = Registration::createFromUser($event, $this->getUser(), true);
+            $registrationRepository = $this->getDoctrine()->getRepository(Registration::class);
+            $registrationRepository->save($registration);
 
             $message = $translator->trans('create.success.created', [], 'event');
             $this->displaySuccess($message);
@@ -60,6 +62,8 @@ class EventController extends BaseDoctrineController
      */
     public function viewAction(Event $event)
     {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_VIEW, $event);
+
         $registrations = $event->getRegistrations();
 
         /** @var Registration[] $participants */
@@ -86,6 +90,8 @@ class EventController extends BaseDoctrineController
      */
     public function updateAction(Request $request, Event $event, TranslatorInterface $translator)
     {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_UPDATE, $event);
+
         $form = $this->createForm(EditType::class, $event)
             ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'update.submit']);
         $form->handleRequest($request);
@@ -99,10 +105,5 @@ class EventController extends BaseDoctrineController
         }
 
         return $this->render('event/update.html.twig', ['form' => $form->createView()]);
-    }
-
-    private function tryProcessForm(Event $event, Request $request, ?FormInterface &$form): bool
-    {
-        return false;
     }
 }

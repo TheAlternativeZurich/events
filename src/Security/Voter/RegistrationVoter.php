@@ -12,15 +12,16 @@
 namespace App\Security\Voter;
 
 use App\Entity\Event;
+use App\Entity\Registration;
 use App\Entity\User;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-class EventVoter extends Voter
+class RegistrationVoter extends Voter
 {
-    const EVENT_VIEW = 'event_view';
-    const EVENT_UPDATE = 'event_update';
+    const REGISTRATION_UPDATE = 'registration_update';
+    const REGISTRATION_DELETE = 'registration_delete';
 
     /**
      * @var ManagerRegistry
@@ -46,19 +47,19 @@ class EventVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EVENT_VIEW, self::EVENT_UPDATE])) {
+        if (!in_array($attribute, [self::REGISTRATION_UPDATE, self::REGISTRATION_DELETE])) {
             return false;
         }
 
-        return $subject instanceof Event;
+        return $subject instanceof Registration;
     }
 
     /**
      * Perform a single access check operation on a given attribute, subject and token.
      * It is safe to assume that $attribute and $subject already passed the "supports()" method check.
      *
-     * @param string $attribute
-     * @param Event  $subject
+     * @param string       $attribute
+     * @param Registration $subject
      *
      * @return bool
      */
@@ -71,16 +72,11 @@ class EventVoter extends Voter
             return false;
         }
 
-        $matchingRegistration = $user->getRegistrationFor($subject);
-        if (null === $matchingRegistration) {
-            return false;
-        }
-
         if ($user instanceof User) {
             switch ($attribute) {
-                case self::EVENT_VIEW:
-                case self::EVENT_UPDATE:
-                    return $matchingRegistration->getIsOrganizer();
+                case self::REGISTRATION_UPDATE:
+                case self::REGISTRATION_DELETE:
+                    return $subject->getUser() === $user;
             }
         }
 

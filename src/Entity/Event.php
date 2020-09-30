@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Event extends BaseEntity
@@ -27,6 +27,20 @@ class Event extends BaseEntity
     use IdTrait;
     use TimeTrait;
     use EventTrait;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, unique=true)
+     */
+    private $identifier;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     */
+    private $organizerSecret;
 
     /**
      * @var int|null
@@ -82,6 +96,22 @@ class Event extends BaseEntity
         $this->participations = new ArrayCollection();
     }
 
+    public function setIdentifiers(string $identifier, string $organizerSecret)
+    {
+        $this->identifier = $identifier;
+        $this->organizerSecret = $organizerSecret;
+    }
+
+    public function getIdentifier(): string
+    {
+        return $this->identifier;
+    }
+
+    public function getOrganizerSecret(): string
+    {
+        return $this->organizerSecret;
+    }
+
     public function getMaximumAttendeeCapacity(): ?int
     {
         return $this->maximumAttendeeCapacity;
@@ -110,6 +140,33 @@ class Event extends BaseEntity
     public function setRegistrationClose(?\DateTime $registrationClose): void
     {
         $this->registrationClose = $registrationClose;
+    }
+
+    public function isRegistrationOpen(): bool
+    {
+        if ($this->closedDate) {
+            return false;
+        }
+
+        $now = new \DateTime();
+        if (null !== $this->registrationOpen && $this->registrationOpen > $now) {
+            return false;
+        }
+
+        if (null !== $this->registrationClose && $this->registrationClose < $now) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isRegistrationPossible(): bool
+    {
+        if (null !== $this->maximumAttendeeCapacity && count($this->registrations) >= $this->maximumAttendeeCapacity) {
+            return false;
+        }
+
+        return $this->isRegistrationOpen();
     }
 
     public function getClosedDate(): ?\DateTime

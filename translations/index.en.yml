@@ -5,3 +5,10 @@ index:
   no_events_yet: Add your first own event or watch out for an upcoming event.
   upcoming_events: Upcoming events
   past_events: Past events
+  view_registration: 'view registration'
+
+register:
+  title: 'Register'
+  description: 'Register for event'
+  already_registered: 'You are already registered.'
+  submit: "Register"

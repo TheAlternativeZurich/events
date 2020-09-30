@@ -1,0 +1,15 @@
+{% extends "_menu_base.html.twig" %}
+
+{% block content %}
+    <div class="content tile">
+        <h1>{{ block('title') }}</h1>
+        <p>{{ block('description') }}</p>
+
+        <hr/>
+
+        {% block single_content %}
+
+        {% endblock %}
+    </div>
+
+{% endblock %}
