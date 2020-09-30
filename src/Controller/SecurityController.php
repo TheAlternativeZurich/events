@@ -135,6 +135,14 @@ class SecurityController extends BaseDoctrineController
         $userToken = new UserToken($user);
         $guardHandler->authenticateWithToken($userToken, $request, 'main');
 
+        $redirectPathKey = '_security.main.target_path';
+        if ($request->getSession()->has($redirectPathKey)) {
+            $value = $request->getSession()->get($redirectPathKey);
+            $request->getSession()->remove($redirectPathKey);
+
+            return $this->redirect($value);
+        }
+
         return $this->redirectToRoute('index');
     }
 }

@@ -11,5 +11,10 @@ index:
 register:
   title: 'Register'
   description: 'Register for event'
-  already_registered: 'You are already registered.'
+  already_registered: 'You are registered.'
   submit: "Register"
+  impossible_reasons:
+    event_full: 'The event is fully booked. Check again at a later time.'
+    before_registration_period: 'Registration has not yet begun.'
+    after_registration_period: 'Registration is over.'
+    event_over: 'Registration is no longer possible.'

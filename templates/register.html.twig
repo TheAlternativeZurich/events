@@ -32,6 +32,18 @@
                 {% endif %}
             {% elseif event.registrationPossible %}
                 {{ form(form) }}
+            {% else %}
+                <p class="alert alert-danger">
+                    {% if event.participantRegistrations|length >= event.maximumAttendeeCapacity %}
+                        {{ "register.impossible_reasons.event_full"|trans }}
+                    {% elseif event.beforeRegistrationPeriod %}
+                        {{ "register.impossible_reasons.before_registration_period"|trans }}
+                    {% elseif event.afterRegistrationPeriod %}
+                        {{ "register.impossible_reasons.after_registration_period"|trans }}
+                    {% else %}
+                        {{ "register.impossible_reasons.event_over"|trans }}
+                    {% endif %}
+                </p>
             {% endif %}
         </div>
     </section>

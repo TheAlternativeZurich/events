@@ -149,16 +149,28 @@ class Event extends BaseEntity
             return false;
         }
 
-        $now = new \DateTime();
-        if (null !== $this->registrationOpen && $this->registrationOpen > $now) {
+        if ($this->isBeforeRegistrationPeriod()) {
             return false;
         }
-
-        if (null !== $this->registrationClose && $this->registrationClose < $now) {
+        if ($this->isAfterRegistrationPeriod()) {
             return false;
         }
 
         return true;
+    }
+
+    public function isBeforeRegistrationPeriod()
+    {
+        $now = new \DateTime();
+
+        return null !== $this->registrationOpen && $this->registrationOpen > $now;
+    }
+
+    public function isAfterRegistrationPeriod()
+    {
+        $now = new \DateTime();
+
+        return null !== $this->registrationClose && $this->registrationClose < $now;
     }
 
     public function isRegistrationPossible(): bool

@@ -19,8 +19,8 @@ class RegistrationRepository extends EntityRepository
     public function save(Registration $registration)
     {
         $maxNumber = 0;
-        foreach ($registration->getEvent()->getRegistrations() as $registration) {
-            $maxNumber = max($registration->getNumber(), $maxNumber);
+        foreach ($registration->getEvent()->getRegistrations() as $existingRegistration) {
+            $maxNumber = max($existingRegistration->getNumber(), $maxNumber);
         }
 
         ++$maxNumber;

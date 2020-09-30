@@ -60,7 +60,7 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        return new RedirectResponse($this->generator->generate('authenticate'));
+        return new RedirectResponse($this->generator->generate('create'));
     }
 
     public function getCredentials(Request $request)

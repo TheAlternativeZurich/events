@@ -6,3 +6,8 @@
 ## About
 
 Makes registration and participation tracking at events easy & efficient.
+
+Pre-Publish checklist:
+- test first-time path
+- test second-time path
+- test responsive for public 
