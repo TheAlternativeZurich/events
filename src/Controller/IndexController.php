@@ -24,6 +24,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * @Route("/")
@@ -65,8 +66,9 @@ class IndexController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function registerAction(string $identifier, Request $request, GuardAuthenticatorHandler $guardHandler)
+    public function registerAction(string $identifier, Request $request, GuardAuthenticatorHandler $guardHandler, TranslatorInterface $translator)
     {
+        /** @var Event $event */
         $event = $this->getDoctrine()->getRepository(Event::class)->findOneBy(['identifier' => $identifier]);
         if (null === $event) {
             throw new NotFoundHttpException();
@@ -96,20 +98,35 @@ class IndexController extends BaseDoctrineController
                 ->add('submit', SubmitType::class, ['translation_domain' => 'index', 'label' => 'register.submit']);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+                // create user if not exists & login
+                if (!$user) {
+                    $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $registration->getEmail()]);
+                    if (null !== $existingUser) {
+                        $message = $translator->trans('create.error.already_registered', [], 'security');
+                        $this->displayError($message);
+
+                        // save event url to redirect after login
+                        $redirectPathKey = '_security.main.target_path';
+                        $request->getSession()->set($redirectPathKey, $request->getUri());
+
+                        return $this->redirectToRoute('authenticate');
+                    }
+
+                    $user = User::createFromRegistration($registration);
+                    $this->fastSave($user);
+
+                    $userToken = new UserToken($user);
+                    $guardHandler->authenticateWithToken($userToken, $request, 'main');
+
+                    $registration->setRelations($event, $user);
+                }
+
                 $registrationRepo = $this->getDoctrine()->getRepository(Registration::class);
                 $registrationRepo->save($registration);
 
                 // update for view
                 $existingRegistration = $registration;
                 $form = null;
-
-                // create user if not exists & login
-                if (!$user) {
-                    $user = User::createFromRegistration($registration);
-
-                    $userToken = new UserToken($user);
-                    $guardHandler->authenticateWithToken($userToken, $request, 'main');
-                }
             }
         }
 

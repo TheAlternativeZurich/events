@@ -79,6 +79,12 @@ class Registration extends BaseEntity
         return $registration;
     }
 
+    public function setRelations(Event $event, User $user)
+    {
+        $this->event = $event;
+        $this->user = $user;
+    }
+
     public function setNumber(int $number)
     {
         $this->number = $number;
