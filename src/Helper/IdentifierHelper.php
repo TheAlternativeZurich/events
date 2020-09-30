@@ -21,14 +21,16 @@ class IdentifierHelper
      */
     public static function getHumanReadableIdentifier(string $text): string
     {
-        $lowercase = strtolower($text);
+        $lowercase = strtolower(preg_replace('/([a-z])([A-Z])/', '$1-$2', $text));
 
         $result = '';
-        for ($i = 0; $i < strlen($text); ++$i) {
+        for ($i = 0; $i < strlen($lowercase); ++$i) {
             $character = $lowercase[$i];
+            $characterValue = ord($character);
+
             //0-9, a-z
-            if (($character >= 48 && $character <= 57) ||
-                ($character >= 97 && $character <= 122)) {
+            if (($characterValue >= 48 && $characterValue <= 57) ||
+                ($characterValue >= 97 && $characterValue <= 122)) {
                 $result .= $character;
             } else {
                 $result .= '-';
