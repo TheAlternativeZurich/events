@@ -1,5 +1,3 @@
-{% macro show_registration(registration) %}
-{% endmacro %}
 {% import _self as own_macros %}
 
 {% extends "_menu_base.html.twig" %}
@@ -23,7 +21,7 @@
             <p class="alert alert-info">{{ "index.no_events_yet"|trans }}</p>
         </div>
     {% else %}
-        {% if upcoming_registrations %}
+        {% if upcoming_registrations|length > 0 %}
             <div class="content mt-5">
                 <h2>{{ "index.upcoming_events"|trans }}</h2>
             </div>
@@ -37,20 +35,41 @@
                             <p class="text-secondary">{{ registration.event.startDate|dateTimeFormat }}</p>
                             <p>{{ registration.event.description }}</p>
                             <p>
-                                <a href="{{ path("register", {"identifier" : registration.event.identifier}) }}">
-                                    {{ "index.view_registration"|trans }}
-                                </a>
+                                {% if registration.isOrganizer %}
+                                    <a class="btn btn-outline-primary"
+                                       href="{{ path("event_view", {"event" : registration.event.id}) }}">
+                                        {{ "index.manage_event"|trans }}
+                                    </a>
+                                {% else %}
+                                    <a href="{{ path("register", {"identifier" : registration.event.identifier}) }}">
+                                        {{ "index.view_registration"|trans }}
+                                    </a>
+                                {% endif %}
                             </p>
                         </div>
                     </div>
                 {% endfor %}
             </div>
-        {% elseif past_registrations %}
-            <h2 class="mt-4">{{ "index.past_events"|trans }}</h2>
+        {% endif %}
 
-            {% for registration in past_registrations %}
-                {{ own_macros.show_registration(registration) }}
-            {% endfor %}
+        {% if past_registrations|length > 0 %}
+            <h2 class="mt-5">{{ "index.past_events"|trans }}</h2>
+            <table class="table content tile">
+                <thead>
+                <tr>
+                    <th>{{ "name"|trans({}, "trait_event") }}</th>
+                    <th>{{ "start_date"|trans({}, "trait_event") }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for registration in past_registrations %}
+                    <tr>
+                        <td>{{ registration.event.name }}</td>
+                        <td>{{ registration.event.startDate|dateTimeFormat }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
     {% endif %}
 

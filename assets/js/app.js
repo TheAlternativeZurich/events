@@ -38,7 +38,7 @@ $(document).ready(() => {
     window.location.reload(true)
   })
 
-  new Masonry('.masonry-grid', {
+  const masonry = new Masonry('.masonry-grid', {
     columnWidth: '.masonry-grid-sizer',
     itemSelector: '.masonry-grid-item',
     percentPosition: true
@@ -73,4 +73,6 @@ $(document).ready(() => {
     keyUpHandler()
     postalCodeField.on('keyup', keyUpHandler)
   }
+
+  return masonry
 })

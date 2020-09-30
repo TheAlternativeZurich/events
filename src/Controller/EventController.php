@@ -80,7 +80,7 @@ class EventController extends BaseDoctrineController
             }
         }
 
-        return $this->render('event/view.html.twig', ['event' => $event, 'participatns' => $participants, 'organizers' => $organizers]);
+        return $this->render('event/view.html.twig', ['event' => $event, 'participants' => $participants, 'organizers' => $organizers]);
     }
 
     /**

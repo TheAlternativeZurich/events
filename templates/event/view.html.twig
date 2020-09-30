@@ -1,6 +1,6 @@
 {% extends "_single_content_base.html.twig" %}
 
-{% block title %}{{ "view.title"|trans }}{% endblock %}
+{% block title %}{{ event.organizer }} - {{ event.name }}{% endblock %}
 {% block description %}{{ "view.description"|trans }}{% endblock %}
 
 {% trans_default_domain "event" %}
@@ -11,4 +11,6 @@
             <i class="fal fa-pencil"></i>
         </a>
     </p>
+
+
 {% endblock %}
