@@ -19,7 +19,18 @@ view:
   title: 'Manage event'
   description: 'Manage participants & communicate.'
   participants: 'Participants'
+  participants_link: 'Participant register link'
+  participants_help: 'Participants can register as long as no restrictions are in effect.'
+  registration_restrictions: 'Registration restrictions'
+  no_participants: 'No participants yet'
+  before: 'before'
+  after: 'after'
   organizers: 'Organizers'
+  organizers_link: 'Organizer register link'
+  organizers_help: 'Organizers can manage the event in the same way than you can. Organizers have to deregister themselves.'
+  no_registration_restrictions: 'No registration restrictions apply'
+  remove_self_from_organizer: 'deregister self as an organizer'
+
 
 deregister:
   title: 'Deregister'

@@ -60,12 +60,19 @@ class RegistrationController extends BaseDoctrineController
         $this->denyAccessUnlessGranted(RegistrationVoter::REGISTRATION_DELETE, $registration);
 
         if ($request->query->has('confirm')) {
-            $this->fastRemove($registration);
+            if (!$registration->getIsOrganizer() || count($registration->getEvent()->getOrganizerRegistrations()) > 1) {
+                $this->fastRemove($registration);
 
-            $message = $translator->trans('delete.success.deleted', [], 'registration');
-            $this->displaySuccess($message);
+                $message = $translator->trans('delete.success.deleted', [], 'registration');
+                $this->displaySuccess($message);
 
-            return $this->redirectToRoute('register', ['identifier' => $registration->getEvent()->getIdentifier()]);
+                return $this->redirectToRoute('register', ['identifier' => $registration->getEvent()->getIdentifier()]);
+            } else {
+                $message = $translator->trans('delete.error.last_organizer', [], 'registration');
+                $this->displayError($message);
+
+                return $this->redirectToRoute('event_view', ['event' => $registration->getEvent()->getId()]);
+            }
         }
 
         return $this->render('registration/delete.html.twig', ['registration' => $registration]);

@@ -65,23 +65,11 @@ class EventController extends BaseDoctrineController
     {
         $this->denyAccessUnlessGranted(EventVoter::EVENT_VIEW, $event);
 
-        $registrations = $event->getRegistrations();
+        $ownRegistration = $this->getUser()->getRegistrationFor($event);
+        $participantRegistrations = $event->getParticipantRegistrations();
+        $organizerRegistrations = $event->getOrganizerRegistrations();
 
-        /** @var Registration[] $participantRegistrations */
-        $participantRegistrations = [];
-        /** @var Registration[] $organizerRegistrations */
-        $organizerRegistrations = [];
-        foreach ($registrations as $registration) {
-            $key = $registration->getCreatedAt()->format('c').'_'.$registration->getId();
-
-            if ($registration->getIsOrganizer()) {
-                $organizerRegistrations[$key] = $registration;
-            } else {
-                $participantRegistrations[$key] = $registration;
-            }
-        }
-
-        return $this->render('event/view.html.twig', ['event' => $event, 'participant_registrations' => $participantRegistrations, 'organizerRegistrations' => $organizerRegistrations]);
+        return $this->render('event/view.html.twig', ['event' => $event, 'participant_registrations' => $participantRegistrations, 'organizer_registrations' => $organizerRegistrations, 'own_registration' => $ownRegistration]);
     }
 
     /**
@@ -94,6 +82,11 @@ class EventController extends BaseDoctrineController
         $this->denyAccessUnlessGranted(EventVoter::EVENT_VIEW, $event);
 
         if ($registration->getEvent() !== $event) {
+            throw new NotFoundHttpException();
+        }
+
+        // owners have to deregister themselves
+        if ($registration->getIsOrganizer()) {
             throw new NotFoundHttpException();
         }
 

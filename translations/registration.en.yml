@@ -11,3 +11,5 @@ delete:
   confirm_consequences: 'Are you sure you want to remove this reservation? You might not be able to reserve again.'
   success:
     deleted: 'Reservation removed.'
+  error:
+    last_organizer: 'You are the last remaining organizer; you are not allowed to remove yourself.'

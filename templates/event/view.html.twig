@@ -1,5 +1,40 @@
 {% extends "_menu_base.html.twig" %}
 
+{% macro registrations_table(registrations, show_delete = false) %}
+    <table class="table content tile">
+        <thead>
+        <tr>
+            <th>{{ "number"|trans({}, "entity_registration") }}</th>
+            <th>{{ "registered_at"|trans({}, "entity_registration") }}</th>
+            <th>{{ "name"|trans({}, "trait_contact_information") }}</th>
+            <th>{{ "email"|trans({}, "trait_contact_information") }}</th>
+            {% if show_delete %}
+                <th></th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for registration in registrations %}
+            <tr>
+                <td>{{ registration.number }}</td>
+                <td>{{ registration.createdAt|dateTimeFormat }}</td>
+                <td>{{ registration.user.name }}</td>
+                <td>{{ registration.user.email }}</td>
+                {% if show_delete %}
+                    <td>
+                        <a class="btn btn-danger"
+                           href="{{ path("event_deregister", {"event": registration.event.id, "registration": registration.id}) }}">
+                            <i class="fal fa-trash"></i>
+                        </a>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endmacro %}
+{% import _self as own_macros %}
+
 {% import "_macros/entity_macros.html.twig" as entity_macros %}
 
 {% block title %}{{ event.organizer }} - {{ event.name }}{% endblock %}
@@ -22,32 +57,54 @@
 
     <div class="content mt-5">
         <h2>{{ "view.participants"|trans }}</h2>
-        <table class="table content tile">
-            <thead>
-            <tr>
-                <th>{{ "number"|trans({}, "entity_registration") }}</th>
-                <th>{{ "registered_at"|trans({}, "entity_registration") }}</th>
-                <th>{{ "name"|trans({}, "trait_contact_information") }}</th>
-                <th>{{ "email"|trans({}, "trait_contact_information") }}</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for registration in participant_registrations %}
-                <tr>
-                    <td>{{ registration.number }}</td>
-                    <td>{{ registration.createdAt|dateTimeFormat }}</td>
-                    <td>{{ registration.user.name }}</td>
-                    <td>{{ registration.user.email }}</td>
-                    <td></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
     </div>
+    <div class="content tile">
+        <p>{{ "view.participants_link"|trans }}:
+            <a href="{{ path("register", {"identifier": event.identifier}) }}">
+                {{ absolute_url(path("register", {"identifier": event.identifier})) }}
+            </a> <br/>
+            {{ "view.participants_help"|trans }}
+        </p>
+        <p>
+            <b>{{ "view.registration_restrictions"|trans }}</b>:<br/>
+            {% if event.registrationOpen %}
+                {{ "view.before"|trans }} {{ event.registrationOpen|dateTimeFormat }} <br/>
+            {% endif %}
+            {% if event.registrationClose %}
+                {{ "view.after"|trans }} {{ event.registrationClose|dateTimeFormat }} <br/>
+            {% endif %}
+            {% if event.maximumAttendeeCapacity %}
+                {{ "maximum_attendee_capacity"|trans({}, "entity_event") }}: {{ event.maximumAttendeeCapacity }} <br/>
+            {% endif %}
+            {% if not event.registrationClose and not event.registrationOpen and not event.maximumAttendeeCapacity %}
+                {{ "view.no_registration_restrictions"|trans }}
+            {% endif %}
+        </p>
+    </div>
+    {% if participant_registrations|length > 0 %}
+        {{ own_macros.registrations_table(participant_registrations, true) }}
+    {% else %}
+        <div class="tile content">
+            <p>{{ "view.no_participants"|trans }}</p>
+        </div>
+    {% endif %}
 
     <div class="content mt-5">
         <h2>{{ "view.organizers"|trans }}</h2>
     </div>
+    <div class="content tile">
+        <p>{{ "view.organizers_link"|trans }}:
+            <a href="{{ path("register", {"identifier": event.identifier, "organizer-secret": event.organizerSecret}) }}">
+                {{ absolute_url(path("register", {"identifier": event.identifier, "organizer-secret": event.organizerSecret})) }}
+            </a> <br/>
+            {{ "view.organizers_help"|trans }}
+        </p>
+        <p>
+            <a href="{{ path("registration_delete", {"registration": own_registration.id}) }}">
+                {{ "view.remove_self_from_organizer"|trans }}
+            </a>
+        </p>
+    </div>
+    {{ own_macros.registrations_table(organizer_registrations) }}
 
 {% endblock %}

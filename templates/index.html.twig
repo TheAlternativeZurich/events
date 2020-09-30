@@ -55,7 +55,9 @@
         {% endif %}
 
         {% if past_registrations|length > 0 %}
-            <h2 class="mt-5">{{ "index.past_events"|trans }}</h2>
+            <div class="content mt-5">
+                <h2>{{ "index.past_events"|trans }}</h2>
+            </div>
             <table class="table content tile">
                 <thead>
                 <tr>

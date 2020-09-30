@@ -80,6 +80,7 @@ class Event extends BaseEntity
      * @var Registration[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="App\Entity\Registration", mappedBy="event")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $registrations;
 
@@ -185,5 +186,37 @@ class Event extends BaseEntity
     public function getRegistrations()
     {
         return $this->registrations;
+    }
+
+    /**
+     * @return Registration[]
+     */
+    public function getOrganizerRegistrations(): array
+    {
+        $organizerRegistrations = [];
+
+        foreach ($this->registrations as $registration) {
+            if ($registration->getIsOrganizer()) {
+                $organizerRegistrations[] = $registration;
+            }
+        }
+
+        return $organizerRegistrations;
+    }
+
+    /**
+     * @return Registration[]
+     */
+    public function getParticipantRegistrations(): array
+    {
+        $participantRegistrations = [];
+
+        foreach ($this->registrations as $registration) {
+            if (!$registration->getIsOrganizer()) {
+                $participantRegistrations[] = $registration;
+            }
+        }
+
+        return $participantRegistrations;
     }
 }
