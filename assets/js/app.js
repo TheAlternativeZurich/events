@@ -40,7 +40,7 @@ $(document).ready(() => {
 
   if ($('.masonry-grid').length) {
     // noinspection JSUnusedLocalSymbols
-    const masonry = new Masonry('.masonry-grid', {
+    const masonry = new Masonry('.masonry-grid', { // eslint-disable-line no-unused-vars
       columnWidth: '.masonry-grid-sizer',
       itemSelector: '.masonry-grid-item',
       percentPosition: true
