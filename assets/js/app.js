@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 const $ = require('jquery')
 require('bootstrap')
 require('typeface-open-sans')
+const Masonry = require('masonry-layout')
 
 // configure fontawesome
 FontawesomeConfig.autoAddCss = false
@@ -35,6 +36,12 @@ $(document).ready(() => {
   // force reload on user browser button navigation
   $(window).on('popstate', () => {
     window.location.reload(true)
+  })
+
+  const masonry = new Masonry('.masonry-grid', {
+    columnWidth: '.masonry-grid-sizer',
+    itemSelector: '.masonry-grid-item',
+    percentPosition: true
   })
 
   const postalCodeField = $('input', '.postal-code-input')

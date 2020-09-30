@@ -27,23 +27,24 @@
             <div class="content mt-5">
                 <h2>{{ "index.upcoming_events"|trans }}</h2>
             </div>
-            <div class="row">
 
-            </div>
-            {% for registration in upcoming_registrations %}
-                <div class="col-md-6">
-                    <div class="content tile">
-                        <h3><b>{{ registration.event.organizer }}</b>: {{ registration.event.name }}</h3>
-                        <p class="text-secondary">{{ registration.event.startDate|dateTimeFormat }}</p>
-                        <p>{{ registration.event.description }}</p>
-                        <p>
-                            <a href="{{ path("register", {"identifier" : registration.event.identifier}) }}">
-                                {{ "index.view_registration"|trans }}
-                            </a>
-                        </p>
+            <div class="masonry-grid">
+                <div class="masonry-grid-sizer"></div>
+                {% for registration in upcoming_registrations %}
+                    <div class="masonry-grid-item">
+                        <div class="content tile">
+                            <h3><b>{{ registration.event.organizer }}</b>: {{ registration.event.name }}</h3>
+                            <p class="text-secondary">{{ registration.event.startDate|dateTimeFormat }}</p>
+                            <p>{{ registration.event.description }}</p>
+                            <p>
+                                <a href="{{ path("register", {"identifier" : registration.event.identifier}) }}">
+                                    {{ "index.view_registration"|trans }}
+                                </a>
+                            </p>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         {% elseif past_registrations %}
             <h2 class="mt-4">{{ "index.past_events"|trans }}</h2>
 

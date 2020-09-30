@@ -67,3 +67,13 @@ body {
     margin-bottom: 0;
   }
 }
+
+.masonry-grid {
+  margin-right: -1em;
+}
+
+.masonry-grid-item,
+.masonry-grid-sizer {
+  margin-right: 0.5em;
+  width: calc(50% - 0.5em);
+}

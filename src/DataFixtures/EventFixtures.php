@@ -31,7 +31,9 @@ class EventFixtures extends Fixture implements OrderedFixtureInterface
         $user = $this->getReference(UserFixtures::TESTER_REFERENCE);
 
         $entries = [
-            ['TheAlternative', 'Console Toolkit', 'Learn how to master the console!', '2020-12-22T18:00:00'],
+            ['TheAlternative', 'Console Toolkit', 'Learn how to master the console!', '2020-12-22T18:00:00', null, null, null],
+            ['TheAlternative', 'Free Software & Open Source', 'The basics about Free Software & Open Source and why you should use it.', '2020-12-26T18:00:00', 10, null, null],
+            ['TheAlternative', 'Bash Workshop', 'Bash commands & Linux Basics to master your studies.', '2020-01-27T18:00:00', 3, '2020-01-27T18:00:00', '2020-01-28T18:00:00'],
         ];
 
         foreach ($entries as $entry) {
