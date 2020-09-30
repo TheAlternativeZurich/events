@@ -1,0 +1,12 @@
+{% macro display_event(event, header = "h1") %}
+    <{{ header }}>{{ event.organizer }} - {{ event.name }}</{{ header }}>
+    <p class="text-secondary">
+        {{ event.startDate|dateTimeFormat }}
+        {% if event.endDate %}
+            - {{ event.endDate|dateTimeFormat }}
+        {% endif %}
+    </p>
+    <p>
+        {{ event.description }}
+    </p>
+{% endmacro %}

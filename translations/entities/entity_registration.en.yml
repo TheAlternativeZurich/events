@@ -1,3 +1,7 @@
 entity:
   name: Registration
   plural: Registrations
+
+number: 'Number'
+
+registered_at: 'Registered at'

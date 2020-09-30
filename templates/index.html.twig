@@ -2,6 +2,8 @@
 
 {% extends "_menu_base.html.twig" %}
 
+{% import "_macros/entity_macros.html.twig" as entity_macros %}
+
 {% block title %}{{ "index.title"|trans }}{% endblock %}
 {% block description %}{{ "index.description"|trans }}{% endblock %}
 
@@ -31,9 +33,9 @@
                 {% for registration in upcoming_registrations %}
                     <div class="masonry-grid-item">
                         <div class="content tile">
-                            <h3><b>{{ registration.event.organizer }}</b>: {{ registration.event.name }}</h3>
-                            <p class="text-secondary">{{ registration.event.startDate|dateTimeFormat }}</p>
-                            <p>{{ registration.event.description }}</p>
+
+                            {{ entity_macros.display_event(registration.event, "h3") }}
+
                             <p>
                                 {% if registration.isOrganizer %}
                                     <a class="btn btn-outline-primary"

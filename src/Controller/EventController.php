@@ -19,6 +19,7 @@ use App\Security\Voter\EventVoter;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -66,21 +67,46 @@ class EventController extends BaseDoctrineController
 
         $registrations = $event->getRegistrations();
 
-        /** @var Registration[] $participants */
-        $participants = [];
-        /** @var Registration[] $organizers */
-        $organizers = [];
+        /** @var Registration[] $participantRegistrations */
+        $participantRegistrations = [];
+        /** @var Registration[] $organizerRegistrations */
+        $organizerRegistrations = [];
         foreach ($registrations as $registration) {
             $key = $registration->getCreatedAt()->format('c').'_'.$registration->getId();
 
             if ($registration->getIsOrganizer()) {
-                $organizers[$key] = $registration;
+                $organizerRegistrations[$key] = $registration;
             } else {
-                $participants[$key] = $registration;
+                $participantRegistrations[$key] = $registration;
             }
         }
 
-        return $this->render('event/view.html.twig', ['event' => $event, 'participants' => $participants, 'organizers' => $organizers]);
+        return $this->render('event/view.html.twig', ['event' => $event, 'participant_registrations' => $participantRegistrations, 'organizerRegistrations' => $organizerRegistrations]);
+    }
+
+    /**
+     * @Route("/{event}/deregister/{registration}", name="event_deregister")
+     *
+     * @return Response
+     */
+    public function deregisterAction(Request $request, Event $event, Registration $registration, TranslatorInterface $translator)
+    {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_VIEW, $event);
+
+        if ($registration->getEvent() !== $event) {
+            throw new NotFoundHttpException();
+        }
+
+        if ($request->query->has('confirm')) {
+            $this->fastRemove($registration);
+
+            $message = $translator->trans('deregister.success.deregistered', [], 'event');
+            $this->displaySuccess($message);
+
+            return $this->redirectToRoute('event_view', ['id' => $event->getId()]);
+        }
+
+        return $this->render('event/deregister.html.twig', ['registration' => $registration]);
     }
 
     /**

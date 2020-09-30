@@ -11,3 +11,5 @@ postal_code: Postal code
 locality: Place
 canton: Canton
 country: Country
+
+name: Name

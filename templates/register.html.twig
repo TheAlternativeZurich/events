@@ -1,5 +1,7 @@
 {% extends "_menu_base.html.twig" %}
 
+{% import "_macros/entity_macros.html.twig" as entity_macros %}
+
 {% block title %}{{ event.organizer }} - {{ event.name }}{% endblock %}
 {% block description %}{{ "register.description"|trans }}{% endblock %}
 
@@ -8,16 +10,8 @@
 {% block content %}
     <section class="center-wrapper mt-4">
         <div class="center-content wide">
-            <h1>{{ event.organizer }} - {{ event.name }}</h1>
-            <p class="text-secondary">
-                {{ event.startDate|dateTimeFormat }}
-                {% if event.endDate %}
-                    - {{ event.endDate|dateTimeFormat }}
-                {% endif %}
-            </p>
-            <p>
-                {{ event.description }}
-            </p>
+
+            {{ entity_macros.display_event(event) }}
 
             <hr/>
             {% if existing_registration is not null %}

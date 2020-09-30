@@ -222,4 +222,9 @@ trait ContactInformationTrait
 
         return $result;
     }
+
+    public function getName()
+    {
+        return $this->givenName.' '.$this->familyName;
+    }
 }

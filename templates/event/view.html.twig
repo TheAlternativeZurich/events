@@ -1,16 +1,53 @@
-{% extends "_single_content_base.html.twig" %}
+{% extends "_menu_base.html.twig" %}
+
+{% import "_macros/entity_macros.html.twig" as entity_macros %}
 
 {% block title %}{{ event.organizer }} - {{ event.name }}{% endblock %}
 {% block description %}{{ "view.description"|trans }}{% endblock %}
 
 {% trans_default_domain "event" %}
 
-{% block single_content %}
-    <p>
-        <a class="btn btn-secondary" href="{{ path("event_update", {"event": event.id}) }}">
-            <i class="fal fa-pencil"></i>
-        </a>
-    </p>
+{% block content %}
+    <div class="content">
+        <p>
+            <a class="btn btn-secondary" href="{{ path("event_update", {"event": event.id}) }}">
+                <i class="fal fa-pencil"></i>
+            </a>
+        </p>
+    </div>
 
+    <div class="content tile">
+        {{ entity_macros.display_event(event) }}
+    </div>
+
+    <div class="content mt-5">
+        <h2>{{ "view.participants"|trans }}</h2>
+        <table class="table content tile">
+            <thead>
+            <tr>
+                <th>{{ "number"|trans({}, "entity_registration") }}</th>
+                <th>{{ "registered_at"|trans({}, "entity_registration") }}</th>
+                <th>{{ "name"|trans({}, "trait_contact_information") }}</th>
+                <th>{{ "email"|trans({}, "trait_contact_information") }}</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for registration in participant_registrations %}
+                <tr>
+                    <td>{{ registration.number }}</td>
+                    <td>{{ registration.createdAt|dateTimeFormat }}</td>
+                    <td>{{ registration.user.name }}</td>
+                    <td>{{ registration.user.email }}</td>
+                    <td></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="content mt-5">
+        <h2>{{ "view.organizers"|trans }}</h2>
+    </div>
 
 {% endblock %}

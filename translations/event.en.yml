@@ -18,3 +18,12 @@ edit:
 view:
   title: 'Manage event'
   description: 'Manage participants & communicate.'
+  participants: 'Participants'
+  organizers: 'Organizers'
+
+deregister:
+  title: 'Deregister'
+  description: 'Deregister a participant'
+  confirm_consequences: 'Do you really want to deregister this participant? The registration will be removed, no notification will be sent, '
+  success:
+    deregistered: 'Successfully removed registration.'
