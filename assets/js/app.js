@@ -38,7 +38,7 @@ $(document).ready(() => {
     window.location.reload(true)
   })
 
-  const masonry = new Masonry('.masonry-grid', {
+  new Masonry('.masonry-grid', {
     columnWidth: '.masonry-grid-sizer',
     itemSelector: '.masonry-grid-item',
     percentPosition: true

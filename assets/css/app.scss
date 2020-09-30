@@ -52,7 +52,7 @@ body {
   padding-left: 1em;
   padding-right: 1em;
 
-  & > *:last-child {
+  > *:last-child {
     margin-bottom: 0;
   }
 }
@@ -63,7 +63,7 @@ body {
   background-color: #fff;
   padding: 1em;
 
-  & > *:last-child {
+  > *:last-child {
     margin-bottom: 0;
   }
 }
