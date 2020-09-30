@@ -1,38 +1,38 @@
 {% block contact_information_trait_row %}
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.givenName) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.familyName) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.email) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.phone) }}
         </div>
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-9">
+        <div class="col-sm-9">
             {{ form_row(form.streetAddress) }}
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3 postal-code-input">
+        <div class="col-sm-3 postal-code-input">
             {{ form_row(form.postalCode) }}
         </div>
-        <div class="col-md-6 locality-input">
+        <div class="col-sm-6 locality-input">
             {{ form_row(form.locality) }}
         </div>
-        <div class="col-md-3 canton-input">
+        <div class="col-sm-3 canton-input">
             {{ form_row(form.canton) }}
         </div>
     </div>
 
     <div class="row mt-4">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             {{ form_row(form.country) }}
         </div>
     </div>
@@ -40,24 +40,24 @@
 
 {% block event_trait_row %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-sm-8">
             {{ form_row(form.name) }}
         </div>
-        <div class="col-md-4">
+        <div class="col-sm-4">
             {{ form_row(form.organizer) }}
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-sm-12">
             {{ form_row(form.description) }}
         </div>
     </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.startDate) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.endDate) }}
         </div>
     </div>
@@ -70,16 +70,16 @@
     <hr/>
     <p class="text-secondary">{{ "edit.set_registration_restrictions"|trans({}, "event") }}</p>
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.maximumAttendeeCapacity) }}
         </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.registrationOpen) }}
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6">
             {{ form_row(form.registrationClose) }}
         </div>
     </div>

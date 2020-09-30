@@ -46,6 +46,6 @@ class IdentifierHelper
             $result .= RandomHelper::generateHumanReadableRandom(10, '-');
         }
 
-        return $result;
+        return trim($result);
     }
 }
