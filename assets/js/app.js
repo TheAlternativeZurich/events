@@ -38,11 +38,14 @@ $(document).ready(() => {
     window.location.reload(true)
   })
 
-  const masonry = new Masonry('.masonry-grid', {
-    columnWidth: '.masonry-grid-sizer',
-    itemSelector: '.masonry-grid-item',
-    percentPosition: true
-  })
+  if ($('.masonry-grid').length) {
+    // noinspection JSUnusedLocalSymbols
+    const masonry = new Masonry('.masonry-grid', {
+      columnWidth: '.masonry-grid-sizer',
+      itemSelector: '.masonry-grid-item',
+      percentPosition: true
+    })
+  }
 
   const postalCodeField = $('input', '.postal-code-input')
   if (postalCodeField.length) {
@@ -73,6 +76,4 @@ $(document).ready(() => {
     keyUpHandler()
     postalCodeField.on('keyup', keyUpHandler)
   }
-
-  return masonry
 })

@@ -88,6 +88,10 @@ class IndexController extends BaseDoctrineController
                 $registration = Registration::createFromUser($event, $user);
             }
 
+            if ($request->query->has('organizer-secret') && $request->query->get('organizer-secret') === $event->getOrganizerSecret()) {
+                $registration->setIsOrganizer(true);
+            }
+
             $form = $this->createForm(EditType::class, $registration)
                 ->add('submit', SubmitType::class, ['translation_domain' => 'index', 'label' => 'register.submit']);
             $form->handleRequest($request);
