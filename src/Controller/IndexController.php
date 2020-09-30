@@ -38,7 +38,7 @@ class IndexController extends BaseController
             $event = $registration->getEvent();
 
             $key = $event->getStartDate()->format('c').'_'.$event->getId();
-            if (null !== $event->getClosedDate()) {
+            if (null === $event->getClosedDate()) {
                 $upcomingRegistrations[$key] = $registration;
             } else {
                 $pastRegistrations[$key] = $registration;

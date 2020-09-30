@@ -35,7 +35,12 @@ class EventController extends BaseDoctrineController
     public function createAction(Request $request, TranslatorInterface $translator)
     {
         $event = new Event();
-        if ($this->tryProcessForm($event, $request, $form)) {
+        $form = $this->createForm(EditType::class, $event)
+            ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'create.submit']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->fastSave($event);
+
             $registration = Registration::createFromUser($event, $this->getUser(), 1, true);
             $this->fastSave($registration);
 
@@ -81,7 +86,12 @@ class EventController extends BaseDoctrineController
      */
     public function updateAction(Request $request, Event $event, TranslatorInterface $translator)
     {
-        if ($this->tryProcessForm($event, $request, $form)) {
+        $form = $this->createForm(EditType::class, $event)
+            ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'update.submit']);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->fastSave($event);
+
             $message = $translator->trans('update.success.updated', [], 'event');
             $this->displaySuccess($message);
 
@@ -93,15 +103,6 @@ class EventController extends BaseDoctrineController
 
     private function tryProcessForm(Event $event, Request $request, ?FormInterface &$form): bool
     {
-        $form = $this->createForm(EditType::class, $event)
-            ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'create.submit']);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->fastSave($event);
-
-            return true;
-        }
-
         return false;
     }
 }

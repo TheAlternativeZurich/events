@@ -6,5 +6,9 @@
 {% trans_default_domain "event" %}
 
 {% block content %}
-    hi
+    <p>
+        <a class="btn btn-secondary" href="{{ path("event_update", {"event": event.id}) }}">
+            <i class="fal fa-pencil"></i>
+        </a>
+    </p>
 {% endblock %}
