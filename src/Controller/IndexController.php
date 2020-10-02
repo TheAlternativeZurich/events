@@ -62,7 +62,7 @@ class IndexController extends BaseDoctrineController
     }
 
     /**
-     * @Route("r/{identifier}", name="register", priority="-10")
+     * @Route("e/{identifier}", name="register", priority="-10")
      *
      * @return Response
      */
