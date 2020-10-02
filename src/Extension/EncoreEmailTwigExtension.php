@@ -21,11 +21,13 @@ class EncoreEmailTwigExtension extends AbstractExtension implements ServiceSubsc
 {
     private $container;
     private $publicDir;
+    private $environment;
 
-    public function __construct(ContainerInterface $container, string $publicDir)
+    public function __construct(ContainerInterface $container, string $publicDir, string $environment)
     {
         $this->container = $container;
         $this->publicDir = $publicDir;
+        $this->environment = $environment;
     }
 
     public function getFunctions(): array
@@ -43,6 +45,10 @@ class EncoreEmailTwigExtension extends AbstractExtension implements ServiceSubsc
 
         $source = '';
         foreach ($files as $file) {
+            if ('dev' === $this->environment && 0 === strpos($file, 'https://localhost:8080/')) {
+                $file = substr($file, strlen('https://localhost:8080/'));
+            }
+
             $source .= file_get_contents($this->publicDir.'/'.$file);
         }
 

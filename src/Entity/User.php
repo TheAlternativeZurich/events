@@ -50,6 +50,13 @@ class User extends BaseEntity
     private $isAdminAccount = false;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    private $isEmailConfirmed = false;
+
+    /**
      * @var Registration[]|ArrayCollection
      *
      * @ORM\OneToMany (targetEntity="App\Entity\Registration", mappedBy="user")
@@ -70,6 +77,11 @@ class User extends BaseEntity
         $user->fromOtherContactInformation($registration);
 
         return $user;
+    }
+
+    public function updateFromRegistration(Registration $registration)
+    {
+        $this->fromOtherContactInformation($registration);
     }
 
     /**
@@ -124,5 +136,15 @@ class User extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getIsEmailConfirmed(): bool
+    {
+        return $this->isEmailConfirmed;
+    }
+
+    public function setIsEmailConfirmed(bool $isEmailConfirmed): void
+    {
+        $this->isEmailConfirmed = $isEmailConfirmed;
     }
 }

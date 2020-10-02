@@ -62,7 +62,7 @@ class IndexController extends BaseDoctrineController
     }
 
     /**
-     * @Route("r/{identifier}", name="register", priority="-10")
+     * @Route("e/{identifier}", name="register", priority="-10")
      *
      * @return Response
      */
@@ -82,15 +82,18 @@ class IndexController extends BaseDoctrineController
             $existingRegistration = $user->getRegistrationFor($event);
         }
 
+        $organizerSecretValid = $request->query->has('organizer-secret') &&
+            $request->query->get('organizer-secret') === $event->getOrganizerSecret();
+
         /** @var FormInterface/null $form */
         $form = null;
-        if (!$existingRegistration && $event->isRegistrationPossible()) {
+        if (!$existingRegistration && ($event->isRegistrationPossible() || $organizerSecretValid)) {
             $registration = new Registration();
             if ($user = $this->getUser()) {
                 $registration = Registration::createFromUser($event, $user);
             }
 
-            if ($request->query->has('organizer-secret') && $request->query->get('organizer-secret') === $event->getOrganizerSecret()) {
+            if ($organizerSecretValid) {
                 $registration->setIsOrganizer(true);
             }
 
@@ -119,6 +122,9 @@ class IndexController extends BaseDoctrineController
                     $guardHandler->authenticateWithToken($userToken, $request, 'main');
 
                     $registration->setRelations($event, $user);
+                } else {
+                    $user->updateFromRegistration($registration);
+                    $this->fastSave($user);
                 }
 
                 $registrationRepo = $this->getDoctrine()->getRepository(Registration::class);

@@ -16,6 +16,7 @@ use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditType;
 use App\Security\Voter\EventVoter;
+use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +34,19 @@ class EventController extends BaseDoctrineController
      *
      * @return Response
      */
-    public function createAction(Request $request, TranslatorInterface $translator)
+    public function createAction(Request $request, TranslatorInterface $translator, EmailServiceInterface $emailService)
     {
+        if (!$this->getUser()->getIsEmailConfirmed()) {
+            $message = $translator->trans('create.error.email_not_yet_confirmed', [], 'event');
+            $this->displayDanger($message);
+
+            $emailService->sendAuthenticateLink($this->getUser());
+
+            return $this->redirectToRoute('index');
+        }
+
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_CREATE, new Event());
+
         $event = new Event();
         $form = $this->createForm(EditType::class, $event)
             ->add('submit', SubmitType::class, ['translation_domain' => 'event', 'label' => 'create.submit']);

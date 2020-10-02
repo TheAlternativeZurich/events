@@ -14,6 +14,22 @@
             {{ entity_macros.display_event(event) }}
 
             <hr/>
+            {% if event.getRegistrationOpen or event.registrationClose or event.maximumAttendeeCapacity %}
+                <p>
+                    {% if event.getRegistrationOpen %}
+                        {{ "register.registration_restrictions.open"|trans }}: {{ event.getRegistrationOpen|dateTimeFormat }}
+                        <br/>
+                    {% endif %}
+                    {% if event.registrationClose %}
+                        {{ "register.registration_restrictions.close"|trans }}: {{ event.registrationClose|dateTimeFormat }}
+                        <br/>
+                    {% endif %}
+                    {% if event.maximumAttendeeCapacity %}
+                        {{ "register.registration_restrictions.seats_available"|trans }}: {{ event.placesLeft }}
+                    {% endif %}
+                </p>
+            {% endif %}
+
             {% if existing_registration is not null %}
                 <p class="alert alert-success">
                     {{ "register.already_registered"|trans }}

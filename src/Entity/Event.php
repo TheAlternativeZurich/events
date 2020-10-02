@@ -175,11 +175,19 @@ class Event extends BaseEntity
 
     public function isRegistrationPossible(): bool
     {
-        if (null !== $this->maximumAttendeeCapacity && count($this->registrations) >= $this->maximumAttendeeCapacity) {
-            return false;
+        return $this->placesLeft() > 0 && $this->isRegistrationOpen();
+    }
+
+    public function placesLeft(): int
+    {
+        $participantRegistrationCount = 0;
+        foreach ($this->registrations as $registration) {
+            if (!$registration->getIsOrganizer()) {
+                ++$participantRegistrationCount;
+            }
         }
 
-        return $this->isRegistrationOpen();
+        return max($this->maximumAttendeeCapacity - $participantRegistrationCount, 0);
     }
 
     public function getClosedDate(): ?\DateTime

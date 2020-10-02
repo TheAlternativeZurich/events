@@ -66,7 +66,7 @@ class SecurityController extends BaseDoctrineController
     /**
      * @Route("/authenticate/{authenticationHash}", defaults={"authenticationHash"=null}, name="authenticate")
      */
-    public function login(?string $authenticationHash, Request $request, GuardAuthenticatorHandler $guardHandler, EmailServiceInterface $emailService, TranslatorInterface $translator): Response
+    public function authenticate(?string $authenticationHash, Request $request, GuardAuthenticatorHandler $guardHandler, EmailServiceInterface $emailService, TranslatorInterface $translator): Response
     {
         if (null !== $authenticationHash && HashHelper::HASH_LENGTH === mb_strlen($authenticationHash)) {
             $response = $this->tryLogin($authenticationHash, $guardHandler, $request, $translator);
@@ -120,6 +120,14 @@ class SecurityController extends BaseDoctrineController
         if (null !== $user) {
             $message = $translator->trans('authenticate.success.authentication_successful', [], 'security');
             $this->displaySuccess($message);
+
+            if (!$user->getIsEmailConfirmed() && $this->getUser()) {
+                $user->setIsEmailConfirmed(true);
+                $this->fastSave($user);
+
+                $message = $translator->trans('authenticate.success.email_confirmed', [], 'security');
+                $this->displaySuccess($message);
+            }
 
             return $this->loginAndRedirect($user, $guardHandler, $request);
         } else {

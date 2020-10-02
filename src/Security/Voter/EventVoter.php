@@ -21,6 +21,7 @@ class EventVoter extends Voter
 {
     const EVENT_VIEW = 'event_view';
     const EVENT_UPDATE = 'event_update';
+    const EVENT_CREATE = 'êvent_create';
 
     /**
      * @var ManagerRegistry
@@ -46,7 +47,7 @@ class EventVoter extends Voter
     protected function supports($attribute, $subject)
     {
         // if the attribute isn't one we support, return false
-        if (!in_array($attribute, [self::EVENT_VIEW, self::EVENT_UPDATE])) {
+        if (!in_array($attribute, [self::EVENT_CREATE, self::EVENT_VIEW, self::EVENT_UPDATE])) {
             return false;
         }
 
@@ -69,6 +70,10 @@ class EventVoter extends Voter
         $user = $this->doctrine->getRepository(User::class)->findOneBy(['email' => $email]);
         if (null === $user) {
             return false;
+        }
+
+        if (self::EVENT_CREATE) {
+            return $user->getIsEmailConfirmed();
         }
 
         $matchingRegistration = $user->getRegistrationFor($subject);
