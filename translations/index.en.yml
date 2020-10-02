@@ -18,3 +18,7 @@ register:
     before_registration_period: 'Registration has not yet begun.'
     after_registration_period: 'Registration is over.'
     event_over: 'Registration is no longer possible.'
+  registration_restrictions:
+    open: 'Registration opens'
+    close: 'Registration closes'
+    seats_available: 'Places left'

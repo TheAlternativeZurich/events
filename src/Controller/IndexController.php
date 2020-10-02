@@ -82,15 +82,18 @@ class IndexController extends BaseDoctrineController
             $existingRegistration = $user->getRegistrationFor($event);
         }
 
+        $organizerSecretValid = $request->query->has('organizer-secret') &&
+            $request->query->get('organizer-secret') === $event->getOrganizerSecret();
+
         /** @var FormInterface/null $form */
         $form = null;
-        if (!$existingRegistration && $event->isRegistrationPossible()) {
+        if (!$existingRegistration && ($event->isRegistrationPossible() || $organizerSecretValid)) {
             $registration = new Registration();
             if ($user = $this->getUser()) {
                 $registration = Registration::createFromUser($event, $user);
             }
 
-            if ($request->query->has('organizer-secret') && $request->query->get('organizer-secret') === $event->getOrganizerSecret()) {
+            if ($organizerSecretValid) {
                 $registration->setIsOrganizer(true);
             }
 
