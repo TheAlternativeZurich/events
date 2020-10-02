@@ -79,6 +79,11 @@ class User extends BaseEntity
         return $user;
     }
 
+    public function updateFromRegistration(Registration $registration)
+    {
+        $this->fromOtherContactInformation($registration);
+    }
+
     /**
      * @return Registration[]|ArrayCollection
      */

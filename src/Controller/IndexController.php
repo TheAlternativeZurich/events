@@ -119,6 +119,9 @@ class IndexController extends BaseDoctrineController
                     $guardHandler->authenticateWithToken($userToken, $request, 'main');
 
                     $registration->setRelations($event, $user);
+                } else {
+                    $user->updateFromRegistration($registration);
+                    $this->fastSave($user);
                 }
 
                 $registrationRepo = $this->getDoctrine()->getRepository(Registration::class);
