@@ -121,9 +121,12 @@ class SecurityController extends BaseDoctrineController
             $message = $translator->trans('authenticate.success.authentication_successful', [], 'security');
             $this->displaySuccess($message);
 
-            if (!$user->getIsEmailConfirmed() && $this->getUser()) {
+            if (!$user->getIsEmailConfirmed()) {
                 $user->setIsEmailConfirmed(true);
+            }
 
+            // show email confirmed message if user was already logged in
+            if ($this->getUser()) {
                 $message = $translator->trans('authenticate.success.email_confirmed', [], 'security');
                 $this->displaySuccess($message);
             }
