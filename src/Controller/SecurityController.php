@@ -123,11 +123,13 @@ class SecurityController extends BaseDoctrineController
 
             if (!$user->getIsEmailConfirmed() && $this->getUser()) {
                 $user->setIsEmailConfirmed(true);
-                $this->fastSave($user);
 
                 $message = $translator->trans('authenticate.success.email_confirmed', [], 'security');
                 $this->displaySuccess($message);
             }
+
+            $user->generateAuthenticationHash();
+            $this->fastSave($user);
 
             return $this->loginAndRedirect($user, $guardHandler, $request);
         } else {

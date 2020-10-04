@@ -72,7 +72,7 @@ class EventVoter extends Voter
             return false;
         }
 
-        if (self::EVENT_CREATE) {
+        if (self::EVENT_CREATE === $attribute) {
             return $user->getIsEmailConfirmed();
         }
 
@@ -81,12 +81,10 @@ class EventVoter extends Voter
             return false;
         }
 
-        if ($user instanceof User) {
-            switch ($attribute) {
-                case self::EVENT_VIEW:
-                case self::EVENT_UPDATE:
-                    return $matchingRegistration->getIsOrganizer();
-            }
+        switch ($attribute) {
+            case self::EVENT_VIEW:
+            case self::EVENT_UPDATE:
+                return $matchingRegistration->getIsOrganizer();
         }
 
         throw new \LogicException('Attribute '.$attribute.' unknown!');

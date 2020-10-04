@@ -8,7 +8,7 @@ authenticate:
   success:
     authentication_successful: 'Logged in successful. Welcome back!'
     sent_authentication_link: 'Authentication link sent to your E-Mail. Please check your inbox.'
-    email_confirmed: 'Your E-Mail is not confirmed, and you can create your own events.'
+    email_confirmed: 'Your E-Mail is now confirmed. You may now organize your own events.'
   no_account_yet: 'No account created yet?'
 
 create:
@@ -20,7 +20,8 @@ create:
   success:
     welcome: 'Welcome :)'
   error:
-    already_registered: 'This E-Mail is already in use. Please authenticate instead of registering again.'
+    already_registered: 'This E-Mail is already in use. Please authenticate through the E-Mail we have just sent you.'
+    organizers_need_confirmed_email: 'Your E-Mail is not confirmed yet, but this is required to be able to organize events. Please authenticate through the E-Mail we have just sent you.'
 
 logout:
   title: Logout
