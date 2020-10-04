@@ -21,7 +21,6 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 
 class TokenAuthenticator extends AbstractGuardAuthenticator
 {
@@ -41,11 +40,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     public function supports(Request $request): ?bool
     {
         return false;
-    }
-
-    public function authenticate(Request $request): PassportInterface
-    {
-        throw new MethodNotImplementedException(__FUNCTION__);
     }
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response

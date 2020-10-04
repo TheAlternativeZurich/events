@@ -68,16 +68,16 @@ class EmailService implements EmailServiceInterface
     }
 
     /**
-     * @return false
-     *
      * @throws Exception
      */
     public function sendAuthenticateLink(User $user): bool
     {
         $user->generateAuthenticationHash();
 
+        $httpHost = $this->request ? $this->request->getHttpHost() : 'localhost';
+
         $message = (new TemplatedEmail())
-            ->subject($this->translator->trans('email.send_authentication_link.subject', ['%page%' => $this->request->getHttpHost()], 'email'))
+            ->subject($this->translator->trans('email.send_authentication_link.subject', ['%page%' => $httpHost], 'email'))
             ->from($this->mailerFromEmail)
             ->to($user->getEmail());
 
