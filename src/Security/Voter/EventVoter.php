@@ -72,7 +72,7 @@ class EventVoter extends Voter
             return false;
         }
 
-        if (self::EVENT_CREATE) {
+        if (self::EVENT_CREATE === $attribute) {
             return $user->getIsEmailConfirmed();
         }
 

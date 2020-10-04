@@ -20,7 +20,8 @@ create:
   success:
     welcome: 'Welcome :)'
   error:
-    already_registered: 'This E-Mail is already in use. Please authenticate instead of registering again.'
+    already_registered: 'This E-Mail is already in use. Please authenticate through the E-Mail we have just sent you.'
+    organizers_need_confirmed_email: 'Your E-Mail is not confirmed yet. Please authenticate through the E-Mail we have just sent you.'
 
 logout:
   title: Logout
