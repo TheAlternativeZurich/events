@@ -1,14 +1,15 @@
 authenticate:
   title: 'Authenticate'
-  description: 'Authenticate yourself with the link received by E-Mail.'
-  help: 'Submit your E-Mail so we can send you a link to login.'
+  description: 'Authenticate yourself with the link received by email.'
+  help: 'Already used this tool before? Submit your email and we will send you an authentication link.'
   submit: 'Submit'
   errors:
     authentication_code_invalid: 'This code is not valid (anymore). Please request a new code.'
+    email_not_recognised: 'This email is not registered yet. Create a new account instead.'
   success:
     authentication_successful: 'Logged in successful. Welcome back!'
-    sent_authentication_link: 'Authentication link sent to your E-Mail. Please check your inbox.'
-    email_confirmed: 'Your E-Mail is now confirmed. You may now organize your own events.'
+    sent_authentication_link: 'Authentication link sent to your email. Please check your inbox.'
+    email_confirmed: 'Your email is now confirmed. You may now organize your own events.'
   no_account_yet: 'No account created yet?'
 
 create:
@@ -20,8 +21,8 @@ create:
   success:
     welcome: 'Welcome :)'
   error:
-    already_registered: 'This E-Mail is already in use. Please authenticate through the E-Mail we have just sent you.'
-    organizers_need_confirmed_email: 'Your E-Mail is not confirmed yet, but this is required to be able to organize events. Please authenticate through the E-Mail we have just sent you.'
+    already_registered: 'This email is already in use. Please authenticate through the email we have just sent you.'
+    organizers_need_confirmed_email: 'Your email is not confirmed yet, but this is required to be able to organize events. Please authenticate through the email we have just sent you.'
 
 logout:
   title: Logout

@@ -5,7 +5,7 @@ create:
   success:
     created: 'Event created successfully.'
   error:
-    email_not_yet_confirmed: 'To create a new event, you need to confirm your E-Mail. We have send you an authentication E-Mail.'
+    email_not_yet_confirmed: 'To create a new event, you need to confirm your email. We have send you an authentication email.'
 
 update:
   title: 'Update event'

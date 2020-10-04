@@ -102,7 +102,10 @@ class SecurityController extends BaseDoctrineController
     {
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $existingUser = $userRepository->findOneBy(['email' => $user->getEmail()]);
-        if ($existingUser && !$emailService->sendAuthenticateLink($existingUser)) {
+        if (!$existingUser) {
+            $message = $translator->trans('authenticate.errors.email_not_recognised', [], 'security');
+            $this->displayError($message);
+        } elseif (!$emailService->sendAuthenticateLink($existingUser)) {
             $message = $translator->trans('errors.email_could_not_be_sent', [], 'email');
             $this->displayError($message);
         } else {
