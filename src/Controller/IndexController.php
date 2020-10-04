@@ -19,6 +19,7 @@ use App\Form\Registration\EditType;
 use App\Security\UserToken;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -105,21 +106,10 @@ class IndexController extends BaseDoctrineController
                 if (!$user) {
                     $existingUser = $this->getDoctrine()->getRepository(User::class)->findOneBy(['email' => $registration->getEmail()]);
                     if (null !== $existingUser) {
-                        $message = $translator->trans('create.error.already_registered', [], 'security');
-                        $this->displayError($message);
-
-                        // save event url to redirect after login
-                        $redirectPathKey = '_security.main.target_path';
-                        $request->getSession()->set($redirectPathKey, $request->getUri());
-
-                        return $this->redirectToRoute('authenticate');
+                        return $this->notifyUserAlreadyRegistered($translator, $request);
                     }
 
-                    $user = User::createFromRegistration($registration);
-                    $this->fastSave($user);
-
-                    $userToken = new UserToken($user);
-                    $guardHandler->authenticateWithToken($userToken, $request, 'main');
+                    $user = $this->createUserAndAuthenticate($registration, $guardHandler, $request);
 
                     $registration->setRelations($event, $user);
                 } else {
@@ -137,5 +127,28 @@ class IndexController extends BaseDoctrineController
         }
 
         return $this->render('register.html.twig', ['existing_registration' => $existingRegistration, 'event' => $event, 'form' => $form ? $form->createView() : null]);
+    }
+
+    private function notifyUserAlreadyRegistered(TranslatorInterface $translator, Request $request): RedirectResponse
+    {
+        $message = $translator->trans('create.error.already_registered', [], 'security');
+        $this->displayError($message);
+
+        // save event url to redirect after login
+        $redirectPathKey = '_security.main.target_path';
+        $request->getSession()->set($redirectPathKey, $request->getUri());
+
+        return $this->redirectToRoute('authenticate');
+    }
+
+    private function createUserAndAuthenticate(Registration $registration, GuardAuthenticatorHandler $guardHandler, Request $request): User
+    {
+        $user = User::createFromRegistration($registration);
+        $this->fastSave($user);
+
+        $userToken = new UserToken($user);
+        $guardHandler->authenticateWithToken($userToken, $request, 'main');
+
+        return $user;
     }
 }
