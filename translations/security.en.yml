@@ -8,7 +8,7 @@ authenticate:
   success:
     authentication_successful: 'Logged in successful. Welcome back!'
     sent_authentication_link: 'Authentication link sent to your E-Mail. Please check your inbox.'
-    email_confirmed: 'Your E-Mail is not confirmed, and you can create your own events.'
+    email_confirmed: 'Your E-Mail is now confirmed, and you can create your own events.'
   no_account_yet: 'No account created yet?'
 
 create:
