@@ -22,3 +22,4 @@ register:
     open: 'Registration opens'
     close: 'Registration closes'
     seats_available: 'Places left'
+  already_an_account_question: 'Already have an account?'

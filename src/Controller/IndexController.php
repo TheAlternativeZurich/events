@@ -110,7 +110,13 @@ class IndexController extends BaseDoctrineController
             }
         }
 
-        return $this->render('register.html.twig', ['existing_registration' => $existingRegistration, 'event' => $event, 'form' => $form ? $form->createView() : null]);
+        return $this->render('register.html.twig', [
+                'existing_registration' => $existingRegistration,
+                'event' => $event,
+                'form' => $form ? $form->createView() : null,
+                'user' => $user,
+            ]
+        );
     }
 
     private function saveRegistration(?User $user, Registration $registration, Request $request, EmailServiceInterface $emailService, TranslatorInterface $translator, GuardAuthenticatorHandler $guardHandler, Event $event): bool

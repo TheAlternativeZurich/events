@@ -46,7 +46,13 @@
                         </a>
                     </div>
                 {% endif %}
-            {% elseif event.registrationPossible %}
+            {% elseif form is not null %}
+                {% if user is null %}
+                    <p class="alert alert-info">
+                        {{ "register.already_an_account_question"|trans }}
+                        <a href="{{ path('authenticate') }}">{{ "authenticate.title"|trans({}, "security") }}</a>
+                    </p>
+                {% endif %}
                 {{ form(form) }}
             {% else %}
                 <p class="alert alert-danger">
