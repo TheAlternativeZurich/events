@@ -58,10 +58,8 @@ class CsvService implements CsvServiceInterface
         //set delimiter to specified
         fwrite($handle, 'sep='.static::DELIMITER."\n");
 
-        if (\is_array($header)) {
-            // Add the header of the CSV file
-            fputcsv($handle, $header, static::DELIMITER);
-        }
+        // Add the header of the CSV file
+        fputcsv($handle, $header, static::DELIMITER);
 
         //add the data
         foreach ($data as $row) {

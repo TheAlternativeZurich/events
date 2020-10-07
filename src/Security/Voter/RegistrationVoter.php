@@ -72,12 +72,10 @@ class RegistrationVoter extends Voter
             return false;
         }
 
-        if ($user instanceof User) {
-            switch ($attribute) {
-                case self::REGISTRATION_UPDATE:
-                case self::REGISTRATION_DELETE:
-                    return $subject->getUser() === $user;
-            }
+        switch ($attribute) {
+            case self::REGISTRATION_UPDATE:
+            case self::REGISTRATION_DELETE:
+                return $subject->getUser() === $user;
         }
 
         throw new \LogicException('Attribute '.$attribute.' unknown!');
