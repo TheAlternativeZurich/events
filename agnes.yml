@@ -50,3 +50,9 @@ scripts:
     script:
       - wget -O composer.phar https://getcomposer.org/composer-stable.phar && chmod +x composer.phar && ./composer.phar install --optimize-autoloader --no-scripts
       - php bin/console --env=dev doctrine:fixtures:load -q
+
+tasks:
+  deploy_after_release:
+    after: release
+    task: deploy
+    arguments: { target: '*:*:*' }
