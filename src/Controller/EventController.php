@@ -16,6 +16,7 @@ use App\Entity\Event;
 use App\Entity\Registration;
 use App\Form\Event\EditType;
 use App\Security\Voter\EventVoter;
+use App\Service\Interfaces\CsvServiceInterface;
 use App\Service\Interfaces\EmailServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,6 +83,35 @@ class EventController extends BaseDoctrineController
         $organizerRegistrations = $event->getOrganizerRegistrations();
 
         return $this->render('event/view.html.twig', ['event' => $event, 'participant_registrations' => $participantRegistrations, 'organizer_registrations' => $organizerRegistrations, 'own_registration' => $ownRegistration]);
+    }
+
+    /**
+     * @Route("/{event}/attendance/export", name="event_attendance_export")
+     *
+     * @return Response
+     */
+    public function attendanceExportAction(Event $event, TranslatorInterface $translator, CsvServiceInterface $csvService)
+    {
+        $this->denyAccessUnlessGranted(EventVoter::EVENT_VIEW, $event);
+
+        if (0 === $event->getAttendances()->count()) {
+            $message = $translator->trans('attendance.error.no_attendance_yet', [], 'event');
+            $this->displayError($message);
+
+            return $this->redirectToRoute('event_view', ['event' => $event->getId()]);
+        }
+
+        $now = new \DateTime();
+        $eventPrefix = $event->getOrganizer().' - '.$event->getName();
+        $filename = $eventPrefix.'- '.$now->format('c');
+
+        $header = array_keys($event->getAttendances()[0]->toArray());
+        $values = [];
+        foreach ($event->getAttendances() as $attendance) {
+            $values[] = array_values($attendance->toArray());
+        }
+
+        return $csvService->streamCsv($filename, $values, $header);
     }
 
     /**

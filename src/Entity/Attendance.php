@@ -66,6 +66,15 @@ class Attendance extends BaseEntity
         return $attendance;
     }
 
+    public function toArray(): array
+    {
+        $contactInformationArray = $this->toContactInformationArray();
+        $contactInformationArray['join'] = $this->joinDate->format('c');
+        $contactInformationArray['leave'] = $this->leaveDate->format('c');
+
+        return $contactInformationArray;
+    }
+
     public function getEvent(): Event
     {
         return $this->event;

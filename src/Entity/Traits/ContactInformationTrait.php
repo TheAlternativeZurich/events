@@ -100,6 +100,21 @@ trait ContactInformationTrait
         $this->country = $other->getCountry();
     }
 
+    protected function toContactInformationArray(): array
+    {
+        return [
+            'given name' => $this->givenName,
+            'family name' => $this->familyName,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'street address' => $this->streetAddress,
+            'postal code' => $this->postalCode,
+            'locality' => $this->locality,
+            'canton' => $this->canton,
+            'country' => $this->country,
+        ];
+    }
+
     public function getGivenName(): ?string
     {
         return $this->givenName;

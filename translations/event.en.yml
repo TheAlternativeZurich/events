@@ -40,3 +40,8 @@ deregister:
   confirm_consequences: 'Do you really want to deregister this participant? The registration will be removed, no notification will be sent, '
   success:
     deregistered: 'Successfully removed registration.'
+
+attendance:
+  export: 'Export attendance'
+  error:
+    no_attendance_yet: 'No attendance has been tracked yet.'

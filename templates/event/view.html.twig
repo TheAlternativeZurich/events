@@ -48,6 +48,10 @@
             <a class="btn btn-secondary" href="{{ path("event_update", {"event": event.id}) }}">
                 <i class="fal fa-pencil"></i>
             </a>
+
+            <a class="btn btn-outline-secondary" href="{{ path("event_attendance_export", {"event": event.id}) }}">
+                {{ "attendance.export"|trans }}
+            </a>
         </p>
     </div>
 

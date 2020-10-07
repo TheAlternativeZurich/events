@@ -88,6 +88,7 @@ class Event extends BaseEntity
      * @var Attendance[]|ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Attendance", mappedBy="event")
+     * @ORM\OrderBy({"createdAt" = "ASC"})
      */
     private $attendances;
 
