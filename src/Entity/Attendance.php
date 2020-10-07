@@ -70,7 +70,7 @@ class Attendance extends BaseEntity
     {
         $contactInformationArray = $this->toContactInformationArray();
         $contactInformationArray['join'] = $this->joinDate->format('c');
-        $contactInformationArray['leave'] = $this->leaveDate->format('c');
+        $contactInformationArray['leave'] = $this->leaveDate ? $this->leaveDate->format('c') : '';
 
         return $contactInformationArray;
     }

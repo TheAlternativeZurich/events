@@ -11,7 +11,9 @@
 
 namespace App\Service\Interfaces;
 
+use Symfony\Component\HttpFoundation\Response;
+
 interface CsvServiceInterface
 {
-    public function streamCsv($filename, $data, $header = null);
+    public function streamCsv(string $filename, array $data, array $header): Response;
 }

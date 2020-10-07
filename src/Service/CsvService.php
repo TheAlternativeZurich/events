@@ -22,13 +22,10 @@ class CsvService implements CsvServiceInterface
     /**
      * creates a response containing the data rendered as a csv.
      *
-     * @param string     $filename
      * @param string[][] $data
-     * @param null       $header
-     *
-     * @return Response
+     * @param string[]   $header
      */
-    public function streamCsv($filename, $data, $header = null)
+    public function streamCsv(string $filename, array $data, array $header): Response
     {
         $response = new StreamedResponse();
         $response->setCallback(function () use ($header, $data) {
@@ -50,11 +47,11 @@ class CsvService implements CsvServiceInterface
     }
 
     /**
-     * @param $handle
-     * @param string[][]    $data
-     * @param string[]|null $header
+     * @param resource   $handle
+     * @param string[][] $data
+     * @param string[]   $header
      */
-    private function writeContent($handle, $data, $header)
+    private function writeContent($handle, array $data, array $header)
     {
         //UTF-8 BOM
         fwrite($handle, "\xEF\xBB\xBF");
