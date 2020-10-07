@@ -238,6 +238,14 @@ trait ContactInformationTrait
         return $result;
     }
 
+    public function getAddress()
+    {
+        $street = str_replace("\n", ',', $this->getStreetAddress());
+        $locality = $this->postalCode.' '.$this->locality;
+
+        return $street.', '.$locality.', '.$this->canton.' '.$this->country;
+    }
+
     public function getName()
     {
         return $this->givenName.' '.$this->familyName;

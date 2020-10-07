@@ -1,7 +1,7 @@
 import '../css/app.scss'
 
 import { library as FontawesomeLibrary, config as FontawesomeConfig, dom } from '@fortawesome/fontawesome-svg-core'
-import { faPlus, faPencil, faTrash, faEnvelopeOpen } from '@fortawesome/pro-light-svg-icons'
+import { faPlus, faPencil, faTrash, faEnvelopeOpen, faSignIn, faSignOut } from '@fortawesome/pro-light-svg-icons'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 
 const $ = require('jquery')
@@ -11,7 +11,7 @@ const Masonry = require('masonry-layout')
 
 // configure fontawesome
 FontawesomeConfig.autoAddCss = false
-FontawesomeLibrary.add(faPlus, faPencil, faTrash, faEnvelopeOpen)
+FontawesomeLibrary.add(faPlus, faPencil, faTrash, faEnvelopeOpen, faSignIn, faSignOut)
 dom.watch()
 
 const zipcodes = require('./ressources/zipcodes.ch.json')

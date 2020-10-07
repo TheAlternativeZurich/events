@@ -43,5 +43,23 @@ deregister:
 
 attendance:
   export: 'Export attendance'
+  title: 'Track attendance'
+  description: 'Track when people leave and join the event.'
+  registered: 'event'
   error:
     no_attendance_yet: 'No attendance has been tracked yet.'
+  status:
+    missing: 'missing'
+    attending: 'attending'
+    left: 'left'
+  action:
+    join: 'join'
+    leave: 'leave'
+
+join:
+  error:
+    already_attending: 'The participant is already marked as attending.'
+
+leave:
+  error:
+    already_left: 'The participant already marked as left.'

@@ -11,6 +11,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Event;
 use App\Entity\Registration;
 use Doctrine\ORM\EntityRepository;
 
@@ -30,5 +31,16 @@ class RegistrationRepository extends EntityRepository
         $manager = $this->getEntityManager();
         $manager->persist($registration);
         $manager->flush();
+    }
+
+    public function findAllWithAttendance(Event $event)
+    {
+        $qb = $this->createQueryBuilder('r')
+            ->leftJoin('r.attendances', 'a')
+            ->where('r.event = :event_id');
+
+        $qb->setParameter(':event_id', $event->getId());
+
+        return $qb->getQuery()->getResult();
     }
 }

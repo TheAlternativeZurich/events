@@ -137,4 +137,15 @@ class Registration extends BaseEntity
     {
         return $this->attendances;
     }
+
+    public function getActiveAttendance(): ?Attendance
+    {
+        foreach ($this->attendances as $attendance) {
+            if (!$attendance->getLeaveDate()) {
+                return $attendance;
+            }
+        }
+
+        return null;
+    }
 }
