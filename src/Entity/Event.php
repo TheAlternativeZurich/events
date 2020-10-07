@@ -85,16 +85,16 @@ class Event extends BaseEntity
     private $registrations;
 
     /**
-     * @var Participation[]|ArrayCollection
+     * @var Attendance[]|ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="App\Entity\Participation", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="Attendance", mappedBy="event")
      */
-    private $participations;
+    private $attendances;
 
     public function __construct()
     {
         $this->registrations = new ArrayCollection();
-        $this->participations = new ArrayCollection();
+        $this->attendances = new ArrayCollection();
     }
 
     public function setIdentifiers(string $identifier, string $organizerSecret)
@@ -238,5 +238,13 @@ class Event extends BaseEntity
         }
 
         return $participantRegistrations;
+    }
+
+    /**
+     * @return Attendance[]|ArrayCollection
+     */
+    public function getAttendances()
+    {
+        return $this->attendances;
     }
 }

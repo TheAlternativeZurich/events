@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity()
  * @ORM\HasLifecycleCallbacks
  */
-class Participation extends BaseEntity
+class Attendance extends BaseEntity
 {
     use IdTrait;
     use TimeTrait;
@@ -30,14 +30,14 @@ class Participation extends BaseEntity
     /**
      * @var Event
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Event", inversedBy="attendances")
      */
     private $event;
 
     /**
      * @var Registration
      *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="participations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Registration", inversedBy="attendances")
      */
     private $registration;
 
@@ -57,13 +57,13 @@ class Participation extends BaseEntity
 
     public static function create(Event $event, Registration $registration)
     {
-        $participation = new Participation();
-        $participation->event = $event;
-        $participation->registration = $registration;
-        $participation->joinDate = new \DateTime();
-        $participation->fromOtherContactInformation($registration);
+        $attendance = new Attendance();
+        $attendance->event = $event;
+        $attendance->registration = $registration;
+        $attendance->joinDate = new \DateTime();
+        $attendance->fromOtherContactInformation($registration);
 
-        return $participation;
+        return $attendance;
     }
 
     public function getEvent(): Event
