@@ -57,15 +57,15 @@ class Registration extends BaseEntity
     private $user;
 
     /**
-     * @var Participation[]|ArrayCollection
+     * @var Attendance[]|ArrayCollection
      *
-     * @ORM\OneToMany (targetEntity="App\Entity\Participation", mappedBy="registration")
+     * @ORM\OneToMany (targetEntity="Attendance", mappedBy="registration")
      */
-    private $participations;
+    private $attendances;
 
     public function __construct()
     {
-        $this->participations = new ArrayCollection();
+        $this->attendances = new ArrayCollection();
     }
 
     public static function createFromUser(Event $event, User $user, bool $isOrganizer = false)
@@ -123,10 +123,29 @@ class Registration extends BaseEntity
 
     public function canDeregister(): bool
     {
-        if ($this->participations->count() > 0) {
+        if ($this->attendances->count() > 0) {
             return false;
         }
 
         return $this->event->isRegistrationOpen();
+    }
+
+    /**
+     * @return Attendance[]|ArrayCollection
+     */
+    public function getAttendances()
+    {
+        return $this->attendances;
+    }
+
+    public function getActiveAttendance(): ?Attendance
+    {
+        foreach ($this->attendances as $attendance) {
+            if (!$attendance->getLeaveDate()) {
+                return $attendance;
+            }
+        }
+
+        return null;
     }
 }

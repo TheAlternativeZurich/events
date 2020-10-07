@@ -1,7 +1,7 @@
 trait:
   name: Contact Information
 
-email: email
+email: Email
 given_name: Given name
 family_name: Family name
 phone: Phone
@@ -11,5 +11,7 @@ postal_code: Postal code
 locality: Place
 canton: Canton
 country: Country
+
+address: Adress
 
 name: Name

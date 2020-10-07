@@ -40,3 +40,26 @@ deregister:
   confirm_consequences: 'Do you really want to deregister this participant? The registration will be removed, no notification will be sent, '
   success:
     deregistered: 'Successfully removed registration.'
+
+attendance:
+  export: 'Export attendance'
+  title: 'Track attendance'
+  description: 'Track when people leave and join the event.'
+  registered: 'event'
+  error:
+    no_attendance_yet: 'No attendance has been tracked yet.'
+  status:
+    missing: 'missing'
+    attending: 'attending'
+    left: 'left'
+  action:
+    join: 'join'
+    leave: 'leave'
+
+join:
+  error:
+    already_attending: 'The participant is already marked as attending.'
+
+leave:
+  error:
+    already_left: 'The participant already marked as left.'
