@@ -16,6 +16,7 @@ github:
 data:
   shared_folders:
     - var/persistent
+    - var/cache/prod/sessions
 
   files:
     - path: .env.local

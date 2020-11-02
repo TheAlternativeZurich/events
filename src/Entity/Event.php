@@ -176,11 +176,17 @@ class Event extends BaseEntity
 
     public function isRegistrationPossible(): bool
     {
-        return $this->placesLeft() > 0 && $this->isRegistrationOpen();
+        $placesLeft = $this->placesLeft();
+
+        return (null === $placesLeft || $placesLeft > 0) && $this->isRegistrationOpen();
     }
 
-    public function placesLeft(): int
+    public function placesLeft(): ?int
     {
+        if (null === $this->maximumAttendeeCapacity) {
+            return null;
+        }
+
         $participantRegistrationCount = 0;
         foreach ($this->registrations as $registration) {
             if (!$registration->getIsOrganizer()) {

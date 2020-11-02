@@ -14,7 +14,7 @@
         "typeface-open-sans": "^0.0.75"
     },
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.30.0",
+        "@symfony/webpack-encore": "^0.31.0",
         "autoprefixer": "^9.8.6",
         "core-js": "^3.0.0",
         "css-loader": "^4.2.2",
@@ -28,7 +28,7 @@
         "postcss-loader": "^3.0.0",
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.26.10",
-        "sass-loader": "^8.0.0",
+        "sass-loader": "^9.0.0",
         "stylelint": "^13.6.1",
         "stylelint-config-sass-guidelines": "^7.0.0",
         "stylelint-config-standard": "^20.0.0",
