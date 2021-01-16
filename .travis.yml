@@ -60,7 +60,7 @@ script:
   # backend tests
   - cp .env.travis .env.local
   - php bin/console doctrine:migrations:migrate --no-interaction
-  - php bin/phpunit
+  - XDEBUG_MODE=coverage php bin/phpunit
 
   # frontend dependency checks
   - yarn check
