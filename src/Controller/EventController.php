@@ -42,7 +42,7 @@ class EventController extends BaseDoctrineController
             $message = $translator->trans('create.error.email_not_yet_confirmed', [], 'event');
             $this->displayDanger($message);
 
-            $emailService->sendAuthenticateLink(/* @scrutinizer ignore-type */$this->getUser());
+            $emailService->sendAuthenticateLink(/* @scrutinizer ignore-type */ $this->getUser());
 
             return $this->redirectToRoute('index');
         }
@@ -57,7 +57,7 @@ class EventController extends BaseDoctrineController
             $eventRepository = $this->getDoctrine()->getRepository(Event::class);
             $eventRepository->save($event);
 
-            $registration = Registration::createFromUser($event, /* @scrutinizer ignore-type */$this->getUser(), true);
+            $registration = Registration::createFromUser($event, /* @scrutinizer ignore-type */ $this->getUser(), true);
             $registrationRepository = $this->getDoctrine()->getRepository(Registration::class);
             $registrationRepository->save($registration);
 
