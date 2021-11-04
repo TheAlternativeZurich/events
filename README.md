@@ -6,3 +6,5 @@
 ## About
 
 Makes registration and participation tracking at events easy & efficient.
+
+(At the moment, contact tracing is no longer required, hence TheAlternative switched to the simpler https://github.com/TheAlternativeZurich/triage) 
